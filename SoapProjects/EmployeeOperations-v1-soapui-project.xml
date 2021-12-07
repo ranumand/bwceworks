@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="EmployeeOperations_v1" resourceRoot="" soapui-version="4.6.4" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="EmpOperationsEndpoint1Binding" type="wsdl" bindingName="{http://xmlns.example.com/1590242338603}EmpOperationsEndpoint1Binding" soapVersion="1_1" anonymous="optional" definition="file:/C:/Users/ranumandla/Documents/Data/TibcoPOCData/Bw5Works/WSDL/EmployeeOperations_v1.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\WSDL\EmployeeOperations_v1.wsdl"><con:part><con:url>file:\C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\WSDL\EmployeeOperations_v1.wsdl</con:url><con:content><![CDATA[<!--Created by TIBCO WSDL-->
+<wsdl:definitions name="Untitled" targetNamespace="http://xmlns.example.com/1590242338603" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1590242338603" xmlns:ns0="www.tibco.com/GetEmployee" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema targetNamespace="www.tibco.com/GetEmployee" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns="www.tibco.com/GetEmployee" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="GetEmployeeRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Emp_Code" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetEmployeeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="Status" type="xs:string" minOccurs="0"/>
+            <xs:element name="Emp_Code" type="xs:string" minOccurs="0"/>
+            <xs:element name="Emp_Name" type="xs:string" minOccurs="0"/>
+            <xs:element name="Emp_Designation" type="xs:string" minOccurs="0"/>
+            <xs:element name="Emp_Age" type="xs:string" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:service name="EmployeeOperations">
+    <wsdl:port name="EmpOperationsEndpoint1" binding="tns:EmpOperationsEndpoint1Binding">
+      <soap:address location="https://localhost:8084/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="EmpOperations">
+    <wsdl:operation name="OpGetEmployee">
+      <wsdl:input message="tns:GetEmployeeRequest"/>
+      <wsdl:output message="tns:GetEmployeeResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmpOperationsEndpoint1Binding" type="tns:EmpOperations">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="OpGetEmployee">
+      <soap:operation style="document" soapAction="/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1/OpGetEmployee"/>
+      <wsdl:input>
+        <soap:body use="literal" parts="GetEmployeeRequest"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="GetEmployeeResponse"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:message name="GetEmployeeRequest">
+    <wsdl:part name="GetEmployeeRequest" element="ns0:GetEmployeeRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetEmployeeResponse">
+    <wsdl:part name="GetEmployeeResponse" element="ns0:GetEmployeeResponse"/>
+  </wsdl:message>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://localhost:8084/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1</con:endpoint></con:endpoints><con:operation isOneWay="false" action="/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1/OpGetEmployee" name="OpGetEmployee" bindingOperationName="OpGetEmployee" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://localhost:8084/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:get="www.tibco.com/GetEmployee">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <get:GetEmployeeRequest>
+         <!--Optional:-->
+         <get:Emp_Code>23576</get:Emp_Code>
+      </get:GetEmployeeRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1/OpGetEmployee"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>
