@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://xmlns.example.com/20210312170631/concrete" xmlns:tns0="http://www.ooredoo.qa/GetCustomerDetails" xmlns:tns1="http://www.example.org/DeleteCustomer" xmlns:tns2="http://www.example.org/schema/1615557991800" xmlns:tns3="http://www.ooredoo.qa/CustomerRegistration" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://xmlns.example.com/20210312170631/concrete">
+  <wsdl:types>
+    <xsd:schema xmlns:tns="http://www.ooredoo.qa/GetCustomerDetails" elementFormDefault="qualified" targetNamespace="http://www.ooredoo.qa/GetCustomerDetails">
+      <xsd:element name="GetCustomerDetailsRequest" type="tns:GetCustomerDetailsRequest"/>
+      <xsd:complexType name="GetCustomerDetailsRequest">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerID" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomreName" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Mobile" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="EMail" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Address" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="GetCustomerDetailsResponse" type="tns:GetCustomerDetailsResponse"/>
+      <xsd:complexType name="GetCustomerDetailsResponse">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Status" type="tns:Status"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerDetails" type="tns:CustomerDetails"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Status">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Message" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Code" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CustomerDetails">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerID" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomreName" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Mobile" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="EMail" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Address" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="GetCustInput" type="tns:GetCustInput"/>
+      <xsd:complexType name="GetCustInput">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="Data" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns:tns="http://www.example.org/DeleteCustomer" elementFormDefault="qualified" targetNamespace="http://www.example.org/DeleteCustomer">
+      <xsd:element name="DeleteCustomerRequest" type="tns:DeleteCustomerRequest"/>
+      <xsd:complexType name="DeleteCustomerRequest">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerID" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="DeleteCustomerResponse" type="tns:DeleteCustomerResponse"/>
+      <xsd:complexType name="DeleteCustomerResponse">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Status" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Code" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+    <xsd:schema xmlns="http://www.example.org/schema/1615557991800" elementFormDefault="unqualified" targetNamespace="http://www.example.org/schema/1615557991800">
+      <xsd:element name="operationRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="operationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="operationFault">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="fault" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+    <xsd:schema xmlns:tns="http://www.ooredoo.qa/CustomerRegistration" elementFormDefault="qualified" targetNamespace="http://www.ooredoo.qa/CustomerRegistration">
+      <xsd:element name="CustomerRegistrationRequest" type="tns:CustomerRegistrationRequest"/>
+      <xsd:complexType name="CustomerRegistrationRequest">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomreName" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Mobile" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="EMail" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Address" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="CustomerResgistrationResponse" type="tns:CustomerResgistrationResponse"/>
+      <xsd:complexType name="CustomerResgistrationResponse">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Status" type="tns:Status"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerDetails" type="tns:CustomerDetails"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Status">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Message" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Code" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CustomerDetails">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomerID" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CustomreName" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Mobile" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="EMail" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Address" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="OpCustomerRegistrationRequest">
+    <wsdl:part element="tns3:CustomerRegistrationRequest" name="CustomerRegistrationRequest"/>
+  </wsdl:message>
+  <wsdl:message name="OpCustomerRegistrationResponse">
+    <wsdl:part element="tns3:CustomerResgistrationResponse" name="CustomerResgistrationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OpDeleteCustomerRequest">
+    <wsdl:part element="tns1:DeleteCustomerRequest" name="DeleteCustomerRequest"/>
+  </wsdl:message>
+  <wsdl:message name="OpDeleteCustomerResponse">
+    <wsdl:part element="tns1:DeleteCustomerResponse" name="DeleteCustomerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OpGetCustomerRequest">
+    <wsdl:part element="tns0:GetCustomerDetailsRequest" name="GetCustomerDetailsRequest"/>
+  </wsdl:message>
+  <wsdl:message name="OpGetCustomerResponse">
+    <wsdl:part element="tns0:GetCustomerDetailsResponse" name="GetCustomerDetailsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="Service">
+    <wsdl:operation name="OpCustomerRegistration">
+      <wsdl:input message="tns:OpCustomerRegistrationRequest" name="operationInput"/>
+      <wsdl:output message="tns:OpCustomerRegistrationResponse" name="operationOutput"/>
+    </wsdl:operation>
+    <wsdl:operation name="OpDeleteCustomer">
+      <wsdl:input message="tns:OpDeleteCustomerRequest"/>
+      <wsdl:output message="tns:OpDeleteCustomerResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="OpGetCustomer">
+      <wsdl:input message="tns:OpGetCustomerRequest"/>
+      <wsdl:output message="tns:OpGetCustomerResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAPServiceBinding" type="tns:Service">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="OpCustomerRegistration">
+      <soap:operation soapAction="OpCustomerRegistration" style="document"/>
+      <wsdl:input>
+        <soap:body parts="CustomerRegistrationRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="CustomerResgistrationResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpDeleteCustomer">
+      <soap:operation soapAction="OpDeleteCustomer" style="document"/>
+      <wsdl:input>
+        <soap:body parts="DeleteCustomerRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="DeleteCustomerResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="OpGetCustomer">
+      <soap:operation soapAction="OpGetCustomer" style="document"/>
+      <wsdl:input>
+        <soap:body parts="GetCustomerDetailsRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="GetCustomerDetailsResponse" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port binding="tns:SOAPServiceBinding" name="ServiceSOAP">
+      <soap:address location="https://localhost:5432/SOAPServiceBinding/service/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

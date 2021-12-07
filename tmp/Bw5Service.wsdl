@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1615649598633" xmlns:ns0="http://www.tibco.com/schemas/WS2/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1615649598633">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/WS2/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/WS2/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="Request">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Input" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Response">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Output" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Service">
+        <wsdl:port name="PortTypeEndpoint1" binding="tns:PortTypeEndpoint1Binding">
+            <soap:address location="http://localhost:9876/Service.serviceagent/PortTypeEndpoint1"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="TestOperation">
+            <wsdl:input message="tns:Message"/>
+            <wsdl:output message="tns:Message1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint1Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TestOperation">
+            <soap:operation style="document" soapAction="/Service.serviceagent/PortTypeEndpoint1/TestOperation"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="INputRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="Output"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="Message">
+        <wsdl:part name="INputRequest" element="ns0:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Message1">
+        <wsdl:part name="Output" element="ns0:Response"/>
+    </wsdl:message>
+</wsdl:definitions>

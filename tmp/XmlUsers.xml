@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<realm xmlns="http://xsd.tns.tibco.com/trinity/realm/2013" hashAlgorithm="PBKDF2WithHmacSHA256" repetitionCount="1000">
+  <users>
+    <!-- The format of plain text password is only to be used for Test Environment. Use the alternative, supported format of 
+     hashed password type in production.-->
+    <user>
+      <name>john</name>
+      <password salt="5cb6y6ve9Bd43EJgvdyYNWJu">iVoAI1Ge0aAv6P9mwsneCNt1c3nJ1VP7iO8ID/ovthY=</password>
+    </user>
+    <user>
+      <name>alex</name>
+      <password salt="VxeDFbI23G4qQkGyKYFuCEy6">04aDJ92M3qjYUaVwdeyoKaXOMZVomFI+W89IZ+O8AM8=</password>
+    </user>
+    <user>
+      <name>tibco</name>
+      <password salt="45yhETf5t88P+0sqpBy8Ab63">VGSAzBtxXKu+UbxdmsL6WiIfBphx5QqkuOHvsrmXGZU=</password>
+    </user>
+  </users>
+  <group-mapping>
+    <group-name>managers</group-name>
+    <user-name>alex</user-name>
+  </group-mapping>
+  <group-mapping>
+    <group-name>administrators</group-name>
+    <user-name>alex</user-name>
+    <user-name>john</user-name>
+  </group-mapping>
+</realm>
