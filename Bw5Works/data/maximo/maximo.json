@@ -1,0 +1,17 @@
+{"Maximo":
+	[
+		{
+			"GlCreditAcct": "123",
+			"GlDebiAcct" : "123",
+			"WONum" : "123",
+			"Status" : ""
+		},
+		{
+			"GlCreditAcct": "123",
+			"GlDebiAcct" : "123",
+			"WONum" : "123",
+			"Status" : ""
+		}
+	]
+}
+

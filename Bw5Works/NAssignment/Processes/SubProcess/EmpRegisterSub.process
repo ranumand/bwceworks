@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://www.tibcoworks.com/EmployeeOperations" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/pe/EngineTypes">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibcoworks.com/EmployeeOperations" schemaLocation="/Schemas/EmployeeOperationsSchema.xsd"/>
+    <pd:name>Processes/SubProcess/EmpRegisterSub.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx:EmployeeRegistrationRequest"/>
+    <pd:startX>86</pd:startX>
+    <pd:startY>95</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="$RegisterEmp/jdbcUpdateActivityOutput/noOfUpdates > 0&#xA;and&#xA;count($GetEmployee/resultSet/Record) >= 1">
+                <pfx:EmployeeRegistrationResponse>
+                    <pfx:Status>
+                        <pfx:Msg>
+                            <xsl:value-of select="'Employee Registered Successfully'"/>
+                        </pfx:Msg>
+                        <pfx:Code>
+                            <xsl:value-of select="'TIB-00-SUCCESS'"/>
+                        </pfx:Code>
+                    </pfx:Status>
+                    <xsl:for-each select="$GetEmployee/resultSet/Record[1]">
+                        <pfx:CustomerDetails>
+                            <xsl:if test="CUSTOMERNAME">
+                                <pfx:CustomerName>
+                                    <xsl:value-of select="CUSTOMERNAME"/>
+                                </pfx:CustomerName>
+                            </xsl:if>
+                            <pfx:PhoneNumber>
+                                <xsl:value-of select="PHONENUMBER"/>
+                            </pfx:PhoneNumber>
+                            <xsl:if test="EMAIL">
+                                <pfx:Email>
+                                    <xsl:value-of select="EMAIL"/>
+                                </pfx:Email>
+                            </xsl:if>
+                            <xsl:if test="ADDRESSLINE1">
+                                <pfx:AddressLine1>
+                                    <xsl:value-of select="ADDRESSLINE1"/>
+                                </pfx:AddressLine1>
+                            </xsl:if>
+                            <xsl:if test="ADDRESSLINE2">
+                                <pfx:AddressLine2>
+                                    <xsl:value-of select="ADDRESSLINE2"/>
+                                </pfx:AddressLine2>
+                            </xsl:if>
+                            <xsl:if test="CITY">
+                                <pfx:City>
+                                    <xsl:value-of select="CITY"/>
+                                </pfx:City>
+                            </xsl:if>
+                            <xsl:if test="ZIPCODE">
+                                <pfx:ZipCode>
+                                    <xsl:value-of select="ZIPCODE"/>
+                                </pfx:ZipCode>
+                            </xsl:if>
+                            <xsl:if test="DATEOFBIRTH">
+                                <pfx:DateOfBirth>
+                                    <xsl:value-of select="DATEOFBIRTH"/>
+                                </pfx:DateOfBirth>
+                            </xsl:if>
+                            <xsl:if test="REGISTRATIONDATETIME">
+                                <pfx:RegistrationDateTime>
+                                    <xsl:value-of select="REGISTRATIONDATETIME"/>
+                                </pfx:RegistrationDateTime>
+                            </xsl:if>
+                            <xsl:if test="CUSTOMERID">
+                                <pfx:CustomerID>
+                                    <xsl:value-of select="CUSTOMERID"/>
+                                </pfx:CustomerID>
+                            </xsl:if>
+                        </pfx:CustomerDetails>
+                    </xsl:for-each>
+                </pfx:EmployeeRegistrationResponse>
+            </xsl:when>
+            <xsl:when test="exists($Map-Data/pfx:EmployeeRegistrationResponse/pfx:Status)">
+                <xsl:copy-of select="$Map-Data/pfx:EmployeeRegistrationResponse"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <pfx:EmployeeRegistrationResponse>
+                    <pfx:Status>
+                        <pfx:Msg>
+                            <xsl:value-of select="'Employee Not Registered Successfully'"/>
+                        </pfx:Msg>
+                        <pfx:Code>
+                            <xsl:value-of select="'TIB-111-FAILED'"/>
+                        </pfx:Code>
+                    </pfx:Status>
+                </pfx:EmployeeRegistrationResponse>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx:EmployeeRegistrationResponse"/>
+    <pd:endX>793</pd:endX>
+    <pd:endY>95</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1596833509731</pd:targetNamespace>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>591</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <message>
+                    <xsl:value-of select="'EmployeeRegister SubProcess end'"/>
+                </message>
+                <msgCode>
+                    <xsl:value-of select="concat($RegisterEmp/jdbcUpdateActivityOutput/noOfUpdates ,'---', count($GetEmployee/resultSet/Record))"/>
+                </msgCode>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetEmployee">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>491</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>select * from n_customerdetails where PHONENUMBER=? and EMAIL=?</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PhoneNumber</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>Email</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>CUSTOMERNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>PHONENUMBER</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EMAIL</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ADDRESSLINE1</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ADDRESSLINE2</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CITY</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>ZIPCODE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>DATEOFBIRTH</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>REGISTRATIONDATETIME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CUSTOMERID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx:EmployeeRegistrationRequest/pfx:EmployeeRegistrationReq">
+                <jdbcQueryActivityInput>
+                    <PhoneNumber>
+                        <xsl:value-of select="pfx:PhoneNumber"/>
+                    </PhoneNumber>
+                    <Email>
+                        <xsl:value-of select="pfx:Email"/>
+                    </Email>
+                </jdbcQueryActivityInput>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RegisterEmp">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>359</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/JDBC Connection.sharedjdbc</jdbcSharedConfig>
+            <statement>insert into n_customerdetails values(?,?,?,?,?,?,?,?,?,emp.nextval)</statement>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>CustomerName</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PhoneNumber</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>Email</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>AddressLine1</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>AddressLine2</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>City</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>ZipCode</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>DateOfBirth</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>RegistrationDateTime</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx:EmployeeRegistrationRequest/pfx:EmployeeRegistrationReq">
+                <jdbcUpdateActivityInput>
+                    <CustomerName>
+                        <xsl:value-of select="pfx:CustomerName"/>
+                    </CustomerName>
+                    <PhoneNumber>
+                        <xsl:value-of select="pfx:PhoneNumber"/>
+                    </PhoneNumber>
+                    <Email>
+                        <xsl:value-of select="pfx:Email"/>
+                    </Email>
+                    <AddressLine1>
+                        <xsl:value-of select="pfx:AddressLine1"/>
+                    </AddressLine1>
+                    <AddressLine2>
+                        <xsl:value-of select="pfx:AddressLine2"/>
+                    </AddressLine2>
+                    <City>
+                        <xsl:value-of select="pfx:City"/>
+                    </City>
+                    <ZipCode>
+                        <xsl:value-of select="pfx:ZipCode"/>
+                    </ZipCode>
+                    <DateOfBirth>
+                        <xsl:value-of select="pfx:DateOfBirth"/>
+                    </DateOfBirth>
+                    <RegistrationDateTime>
+                        <xsl:value-of select="pfx:RegistrationDateTime"/>
+                    </RegistrationDateTime>
+                </jdbcUpdateActivityInput>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="StartLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>232</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <message>
+                    <xsl:value-of select="'EmployeeRegister SubProcess start'"/>
+                </message>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>409</pd:x>
+        <pd:y>210</pd:y>
+        <config>
+            <element ref="pfx:EmployeeRegistrationResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:EmployeeRegistrationResponse>
+                <xsl:choose>
+                    <xsl:when test="contains($_error/ns1:ErrorReport/StackTrace,'N_CUSTOMERDETAILS_PK')">
+                        <pfx:Status>
+                            <pfx:Msg>
+                                <xsl:value-of select="'Registration Failed, Duplicate PhoneNumber'"/>
+                            </pfx:Msg>
+                            <pfx:Code>
+                                <xsl:value-of select="'TIB-FAILED-PHNNMBR'"/>
+                            </pfx:Code>
+                        </pfx:Status>
+                    </xsl:when>
+                    <xsl:when test="contains($_error/ns1:ErrorReport/StackTrace,'N_CUSTOMERDETAILS_UK')">
+                        <pfx:Status>
+                            <pfx:Msg>
+                                <xsl:value-of select="'Registration Failed, Duplicate EmailID'"/>
+                            </pfx:Msg>
+                            <pfx:Code>
+                                <xsl:value-of select="'TIB-FAILED-EMAIL'"/>
+                            </pfx:Code>
+                        </pfx:Status>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <pfx:Status>
+                            <pfx:Msg>
+                                <xsl:value-of select="$_error/ns1:ErrorReport/Msg"/>
+                            </pfx:Msg>
+                            <xsl:if test="$_error/ns1:ErrorReport/MsgCode">
+                                <pfx:Code>
+                                    <xsl:value-of select="$_error/ns1:ErrorReport/MsgCode"/>
+                                </pfx:Code>
+                            </xsl:if>
+                        </pfx:Status>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </pfx:EmployeeRegistrationResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>StartLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StartLog</pd:from>
+        <pd:to>RegisterEmp</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RegisterEmp</pd:from>
+        <pd:to>GetEmployee</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetEmployee</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RegisterEmp</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

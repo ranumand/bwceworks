@@ -1,0 +1,16 @@
+[
+  {
+    "EMP_NAME": "rakesh",
+    "EMP_AGE": "24",
+    "EMP_DESIGNATION": "tibco",
+    "EMP_CODE": "23575",
+    "EMPJOINDATE": "2020-10-10"
+  },
+  {
+    "EMP_NAME": "rakesh",
+    "EMP_AGE": "24",
+    "EMP_DESIGNATION": "tibco",
+    "EMP_CODE": "23575",
+    "EMPJOINDATE": "2020-10-10"
+  }
+]

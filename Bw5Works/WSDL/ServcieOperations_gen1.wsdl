@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.tibco.com/ServcieOperations/concrete" xmlns:tns0="http://www.example.org/ServiceOperation" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServcieOperations" targetNamespace="http://www.tibco.com/ServcieOperations/concrete">
+  <wsdl:types>
+    <xsd:schema xmlns:tns="http://www.example.org/ServiceOperation" elementFormDefault="qualified" targetNamespace="http://www.example.org/ServiceOperation">
+      <xsd:element name="Soap1Request" type="tns:Soap1Request"/>
+      <xsd:complexType name="Soap1Request">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Input1" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Input2" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="Soap1Response" type="tns:Soap1Response"/>
+      <xsd:complexType name="Soap1Response">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Output" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="Soap2Request" type="tns:Soap2Request"/>
+      <xsd:complexType name="Soap2Request">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Input" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="Soap2Response" type="tns:Soap2Response"/>
+      <xsd:complexType name="Soap2Response">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Output" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SoapOperation1Request">
+    <wsdl:part element="tns0:Soap1Request" name="Request"/>
+  </wsdl:message>
+  <wsdl:message name="SoapOperation1Response">
+    <wsdl:part element="tns0:Soap1Response" name="Response"/>
+  </wsdl:message>
+  <wsdl:message name="SoapOperation2Request">
+    <wsdl:part element="tns0:Soap2Request" name="Request"/>
+  </wsdl:message>
+  <wsdl:message name="SoapOperation2Response">
+    <wsdl:part element="tns0:Soap2Response" name="Response"/>
+  </wsdl:message>
+  <wsdl:portType name="ServcieOperations">
+    <wsdl:operation name="SoapOperation1">
+      <wsdl:input message="tns:SoapOperation1Request"/>
+      <wsdl:output message="tns:SoapOperation1Response"/>
+    </wsdl:operation>
+    <wsdl:operation name="SoapOperation2">
+      <wsdl:input message="tns:SoapOperation2Request"/>
+      <wsdl:output message="tns:SoapOperation2Response"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAPServiceBinding" type="tns:ServcieOperations">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SoapOperation1">
+      <soap:operation soapAction="SoapOperation1" style="document"/>
+      <wsdl:input>
+        <soap:body parts="Request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="Response" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SoapOperation2">
+      <soap:operation soapAction="SoapOperation2" style="document"/>
+      <wsdl:input>
+        <soap:body parts="Request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="Response" use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServcieOperations">
+    <wsdl:port binding="tns:SOAPServiceBinding" name="ServcieOperationsSOAP">
+      <soap:address location="http://localhost:9098/SOAPServiceBinding/servcieOperations/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

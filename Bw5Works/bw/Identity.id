@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <identity>
+        <objectType>url</objectType>
+        <name>Identity</name>
+        <designer/>
+        <url>file:///c:\data\certs\client.jks</url>
+        <fileType>JKS</fileType>
+        <passPhrase>#!OHxA/yO0frDKkSr40bU0X9aSah0S4SbhLE8OMQF3HR8=</passPhrase>
+    </identity>
+</Repository:repository>

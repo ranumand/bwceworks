@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.tibco.com/SamplwWSAbstract/concrete" xmlns:tns0="http://www.samplewebservice.com/samples" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SamplwWSAbstract" targetNamespace="http://www.tibco.com/SamplwWSAbstract/concrete">
+  <wsdl:types>
+    <xsd:schema xmlns:tns="http://www.samplewebservice.com/samples" elementFormDefault="qualified" targetNamespace="http://www.samplewebservice.com/samples">
+      <xsd:element name="InputSchema" type="tns:InputSchema"/>
+      <xsd:complexType name="InputSchema">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Number1" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Number2" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="OutputSchema" type="tns:OutputSchema"/>
+      <xsd:complexType name="OutputSchema">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Response" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="FaultSchema" type="tns:FaultSchema"/>
+      <xsd:complexType name="FaultSchema">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Msg" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Code" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="OpAddRequest">
+    <wsdl:part element="tns0:InputSchema" name="InputRequest"/>
+  </wsdl:message>
+  <wsdl:message name="OpAddResponse">
+    <wsdl:part element="tns0:OutputSchema" name="OutputResponse"/>
+  </wsdl:message>
+  <wsdl:message name="OpAddFault">
+    <wsdl:part element="tns0:FaultSchema" name="Error"/>
+  </wsdl:message>
+  <wsdl:message name="OpSubtractRequest">
+    <wsdl:part element="tns0:InputSchema" name="Request"/>
+  </wsdl:message>
+  <wsdl:message name="OpSubtractResponse">
+    <wsdl:part element="tns0:OutputSchema" name="Response"/>
+  </wsdl:message>
+  <wsdl:message name="OpSubtractFault">
+    <wsdl:part element="tns0:FaultSchema" name="Error"/>
+  </wsdl:message>
+  <wsdl:portType name="SamplwWSAbstract">
+    <wsdl:operation name="OpAdd">
+      <wsdl:input message="tns:OpAddRequest"/>
+      <wsdl:output message="tns:OpAddResponse"/>
+      <wsdl:fault message="tns:OpAddFault" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="OpSubtract">
+      <wsdl:input message="tns:OpSubtractRequest"/>
+      <wsdl:output message="tns:OpSubtractResponse"/>
+      <wsdl:fault message="tns:OpSubtractFault" name="fault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAPServiceBinding" type="tns:SamplwWSAbstract">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="OpAdd">
+      <soap:operation soapAction="OpAdd" style="document"/>
+      <wsdl:input>
+        <soap:body parts="InputRequest" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="OutputResponse" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="OpSubtract">
+      <soap:operation soapAction="OpSubtract" style="document"/>
+      <wsdl:input>
+        <soap:body parts="Request" use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body parts="Response" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <soap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SamplwWSAbstract">
+    <wsdl:port binding="tns:SOAPServiceBinding" name="SamplwWSAbstractSOAP">
+      <soap:address location="http://localhost:9028/SOAPServiceBinding/samplwWSAbstract/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

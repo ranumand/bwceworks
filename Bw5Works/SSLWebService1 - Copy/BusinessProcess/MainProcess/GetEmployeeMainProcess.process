@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1590182964417" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="www.tibco.com/GetEmployee">
+    <wsdl:import namespace="http://xmlns.example.com/1590182964417" location="/SharedResources/WSDL/EmployeeOperations.wsdl"/>
+    <pd:name>BusinessProcess/MainProcess/GetEmployeeMainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:GetEmployeeRequest"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <pfx:GetEmployeeResponse>
+            <GetEmployeeResponse>
+                <xsl:copy-of select="$GetEmployeeSub/ns:GetEmployeeResponse"/>
+            </GetEmployeeResponse>
+        </pfx:GetEmployeeResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:GetEmployeeResponse"/>
+    <pd:endX>484</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1590242370613</pd:targetNamespace>
+    <pd:activity name="GetEmployeeSub">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>311</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/BusinessProcess/SubProcess/GetEmployeeSub.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:copy-of select="$Start/pfx:GetEmployeeRequest/GetEmployeeRequest/ns:GetEmployeeRequest"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetEmployeeSub</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetEmployeeSub</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

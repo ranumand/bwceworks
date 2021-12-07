@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/Schemas/EmployeeSchema.xsd" xmlns:tns="http://xmlns.example.com/1590182964417" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="www.tibco.com/GetEmployee" targetNamespace="http://xmlns.example.com/1590182964417">
+    <import namespace="www.tibco.com/GetEmployee" location="../Schemas/EmployeeSchema.xsd"/>
+    <message name="GetEmployeeRequest">
+        <part name="GetEmployeeRequest" element="ns2:GetEmployeeRequest"/>
+    </message>
+    <message name="GetEmployeeResponse">
+        <part name="GetEmployeeResponse" element="ns2:GetEmployeeResponse"/>
+    </message>
+    <portType name="EmpOperations">
+        <operation name="OpGetEmployee">
+            <input message="tns:GetEmployeeRequest"/>
+            <output message="tns:GetEmployeeResponse"/>
+        </operation>
+    </portType>
+</definitions>

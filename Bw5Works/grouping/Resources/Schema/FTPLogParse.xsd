@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:td.tse.momtrans/v1" targetNamespace="urn:td.tse.momtrans/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="FTRecordType">
+		<xs:sequence>
+			<xs:element ref="processID"/>
+			<xs:element name="ipAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="user" type="xs:string" minOccurs="0"/>
+			<xs:element name="sshMode" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:element name="fileTransfer" type="FTType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="content" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FTRecordListType">
+		<xs:sequence>
+			<xs:element name="record" type="FTRecordType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="record" type="FTRecordType"/>
+	<xs:element name="ftRecords" type="FTRecordListType"/>
+	<xs:element name="rawLogs" type="FTPLogListType"/>
+	<xs:complexType name="FTPLogListType">
+		<xs:sequence>
+			<xs:element name="log" type="FTPLogType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="log" type="FTPLogType"/>
+	<xs:complexType name="FTPLogType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:string"/>
+			<xs:element name="content" type="xs:string"/>
+			<xs:element name="ipAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="user" type="xs:string" minOccurs="0"/>
+			<xs:element name="mode" type="xs:string" minOccurs="0"/>
+			<xs:element name="fileName" type="xs:string" minOccurs="0"/>
+			<xs:element name="sshMode" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="processID" type="xs:string"/>
+	<xs:complexType name="FTType">
+		<xs:sequence>
+			<xs:element name="mode" type="xs:token"/>
+			<xs:element name="fileName" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

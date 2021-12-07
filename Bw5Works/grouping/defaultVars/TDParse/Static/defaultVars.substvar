@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>Connect</name>
+			<value>Connected to</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778285278</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Retrieve</name>
+			<value>RETR</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713681</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>SSL</name>
+			<value>AUTH SSL</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409785289021</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Store</name>
+			<value>STOR</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778285307</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>User</name>
+			<value>USER</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713631</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

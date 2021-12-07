@@ -1,0 +1,69 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<repository xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xmlns = "http://www.tibco.com/xmlns/repo/types/2002">
+	<globalVariables>
+		<globalVariable>
+			<name>LogFileDir</name>
+			<value>C:\Users\bdorman\Documents\Projects\TD - MFT Migration\Sources</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778908537</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>LogFileName</name>
+			<value>servuftp.09-02-2014.log</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778940925</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>OutFileDir</name>
+			<value>C:\Temp</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409849402220</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>OutfileName</name>
+			<value>FTPRecs.txt</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409849431639</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Receive</name>
+			<value>Receiving File</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713668</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>RecvDir</name>
+			<value>Dropoff</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713694</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>Send</name>
+			<value>Sending File</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713656</modTime>
+		</globalVariable>
+		<globalVariable>
+			<name>SendDir</name>
+			<value>pickup</value>
+			<deploymentSettable>true</deploymentSettable>
+			<serviceSettable>false</serviceSettable>
+			<type>String</type>
+			<modTime>1409778713644</modTime>
+		</globalVariable>
+	</globalVariables>
+</repository>

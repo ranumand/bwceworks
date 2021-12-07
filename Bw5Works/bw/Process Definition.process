@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file/v2">
+    <pd:name>Process Definition.process</pd:name>
+    <pd:startName>Timer</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="Timer">
+        <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
+        <pd:resourceType>ae.activities.timer</pd:resourceType>
+        <pd:x>27</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <StartTime>1597407054000</StartTime>
+            <Frequency>true</Frequency>
+            <TimeInterval>1</TimeInterval>
+            <FrequencyIndex>Second</FrequencyIndex>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>870</pd:endX>
+    <pd:endY>60</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1595530181084</pd:targetNamespace>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>273</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <fullsource>package ProcessDefinition;
+import java.util.*;
+import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+public class ProcessDefinitionJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String filename = "";
+	public String getfilename() {
+		return filename;
+	}
+	public void setfilename(String val) {
+		filename = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public ProcessDefinitionJavaCode() {
+	}
+
+	public static void convertExcelToCSV(String fileName)  
+			throws InvalidFormatException, IOException {
+
+		BufferedWriter output = new BufferedWriter(new FileWriter(fileName.substring(0, fileName.lastIndexOf(".")) + ".csv"));
+
+		InputStream is = new FileInputStream(fileName);
+
+		Workbook wb = WorkbookFactory.create(is);
+
+		Sheet sheet = wb.getSheetAt(0);
+
+		// hopefully the first row is a header and has a full compliment of
+		// cells, else you'll have to pass in a max (yuck)
+		int maxColumns = sheet.getRow(0).getLastCellNum();
+
+		for (Row row : sheet) {
+
+			// row.getFirstCellNum() and row.getLastCellNum() don't return the
+			// first and last index when the first or last column is blank
+			int minCol = 0; // row.getFirstCellNum()
+			int maxCol = maxColumns; // row.getLastCellNum()
+
+			for (int i = minCol; i &lt; maxCol; i++) {
+
+				Cell cell = row.getCell(i);
+				String buf = "";
+				if (i &gt; 0) {
+					buf = ",";
+				}
+
+				if (cell == null) {
+					output.write(buf);
+					//System.out.print(buf);
+				} else {
+
+					String v = null;
+
+					switch (cell.getCellType()) {
+					case Cell.CELL_TYPE_STRING:
+						v = cell.getRichStringCellValue().getString();
+						break;
+					case Cell.CELL_TYPE_NUMERIC:
+						if (DateUtil.isCellDateFormatted(cell)) {
+							v = cell.getDateCellValue().toString();
+						} else {
+							v = String.valueOf(cell.getNumericCellValue());
+						}
+						break;
+					case Cell.CELL_TYPE_BOOLEAN:
+						v = String.valueOf(cell.getBooleanCellValue());
+						break;
+					case Cell.CELL_TYPE_FORMULA:
+						v = cell.getCellFormula();
+						break;
+					default:
+					}
+
+					if (v != null) {
+						buf = buf + toCSV(v);
+					}
+					output.write(buf);
+					//System.out.print(buf);
+				}
+			}
+
+			output.write("\n");
+			//System.out.println();
+		}
+		is.close();
+		output.close();
+		//return fileName.substring(0, fileName.lastIndexOf(".")) + ".csv";
+	}
+
+
+	/*
+	 * &lt;/strong&gt;
+	 * Escape the given value for output to a CSV file. 
+	 * Assumes the value does not have a double quote wrapper.
+	 * @return
+	 */
+	public static String toCSV(String value) {
+
+		String v = null;
+		boolean doWrap = false;
+
+		if (value != null) {
+
+			v = value;
+
+			if (v.contains("\"")) {
+				v = v.replace("\"", "\"\""); // escape embedded double quotes
+				doWrap = true;
+			}
+
+			if (v.contains(",") || v.contains("\n")) {
+				doWrap = true;
+			}
+
+			if (doWrap) {
+				v = "\"" + v + "\""; // wrap with double quotes to hide the comma
+			}
+		}
+
+		return v;
+	}
+	public void invoke() throws Exception {
+convertExcelToCSV(filename);
+/* Available Variables: DO NOT MODIFY
+	In  : String filename
+* Available Variables: DO NOT MODIFY *****/
+
+}
+}
+</fullsource>
+            <fileName>ProcessDefinitionJavaCode</fileName>
+            <packageName>ProcessDefinition</packageName>
+            <inputData>
+                <row>
+                    <fieldName>filename</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </inputData>
+            <byteCode>
+                <class>
+                    <name>ProcessDefinitionJavaCode</name>
+                    <byteCode>yv66vgAAADQAwwkAMQBQCgAyAFEIAFIHAFMHAFQHAFUKAAYAUQgAVgoAVwBYCgBXAFkKAAYAWggAWwoABgBcCgAFAF0KAAQAXgcAXwoAEABdCgBgAGELAGIAYwsAZABlCwAZAGYLAGQAZwsAaABpCwBoAGoHAGsLABkAbAgAbQoABABuCwBvAHALAG8AcQsAcgBzCgB0AHULAG8AdgoAdwBcCwBvAHgKAFcAeQsAbwB6CgBXAHsLAG8AfAoAMQB9CAB+CgB/AIAKAAQAgAgAgQoAVwCCCACDCgBXAIQKADEAhQcAhgcAhwEACGZpbGVuYW1lAQASTGphdmEvbGFuZy9TdHJpbmc7AQALZ2V0ZmlsZW5hbWUBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAAtzZXRmaWxlbmFtZQEAFShMamF2YS9sYW5nL1N0cmluZzspVgEABjxpbml0PgEAAygpVgEAEWNvbnZlcnRFeGNlbFRvQ1NWAQANU3RhY2tNYXBUYWJsZQcAiAcAUwcAiQcAigcAiwcAjAcAawcAjQEACkV4Y2VwdGlvbnMHAI4HAI8BAAV0b0NTVgEAJihMamF2YS9sYW5nL1N0cmluZzspTGphdmEvbGFuZy9TdHJpbmc7AQAGaW52b2tlBwCQAQAKU291cmNlRmlsZQEAHlByb2Nlc3NEZWZpbml0aW9uSmF2YUNvZGUuamF2YQwAMwA0DAA7ADwBAAABABZqYXZhL2lvL0J1ZmZlcmVkV3JpdGVyAQASamF2YS9pby9GaWxlV3JpdGVyAQAXamF2YS9sYW5nL1N0cmluZ0J1aWxkZXIBAAEuBwCIDACRAJIMAJMAlAwAlQCWAQAELmNzdgwAlwA2DAA7ADoMADsAmAEAF2phdmEvaW8vRmlsZUlucHV0U3RyZWFtBwCZDACaAJsHAIoMAJwAnQcAiwwAngCfDACgAKEMAKIAowcAjAwApAClDACmAKcBAB9vcmcvYXBhY2hlL3BvaS9zcy91c2VybW9kZWwvUm93DACoAKkBAAEsDACqADoHAI0MAKsArAwArQCuBwCvDACwADYHALEMALIAswwAtAC1BwC2DAC3ALgMALkAugwAuwClDAC5ALwMAL0ANgwASgBLAQABCgcAiQwAvgA8AQABIgwAvwDAAQACIiIMAMEAwgwAPQA6AQArUHJvY2Vzc0RlZmluaXRpb24vUHJvY2Vzc0RlZmluaXRpb25KYXZhQ29kZQEAEGphdmEvbGFuZy9PYmplY3QBABBqYXZhL2xhbmcvU3RyaW5nAQATamF2YS9pby9JbnB1dFN0cmVhbQEAJG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9Xb3JrYm9vawEAIW9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9TaGVldAEAEmphdmEvdXRpbC9JdGVyYXRvcgEAIG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9DZWxsAQA6b3JnL2FwYWNoZS9wb2kvb3BlbnhtbDRqL2V4Y2VwdGlvbnMvSW52YWxpZEZvcm1hdEV4Y2VwdGlvbgEAE2phdmEvaW8vSU9FeGNlcHRpb24BABNqYXZhL2xhbmcvRXhjZXB0aW9uAQALbGFzdEluZGV4T2YBABUoTGphdmEvbGFuZy9TdHJpbmc7KUkBAAlzdWJzdHJpbmcBABYoSUkpTGphdmEvbGFuZy9TdHJpbmc7AQAGYXBwZW5kAQAtKExqYXZhL2xhbmcvU3RyaW5nOylMamF2YS9sYW5nL1N0cmluZ0J1aWxkZXI7AQAIdG9TdHJpbmcBABMoTGphdmEvaW8vV3JpdGVyOylWAQArb3JnL2FwYWNoZS9wb2kvc3MvdXNlcm1vZGVsL1dvcmtib29rRmFjdG9yeQEABmNyZWF0ZQEAPShMamF2YS9pby9JbnB1dFN0cmVhbTspTG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9Xb3JrYm9vazsBAApnZXRTaGVldEF0AQAmKEkpTG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9TaGVldDsBAAZnZXRSb3cBACQoSSlMb3JnL2FwYWNoZS9wb2kvc3MvdXNlcm1vZGVsL1JvdzsBAA5nZXRMYXN0Q2VsbE51bQEAAygpUwEACGl0ZXJhdG9yAQAWKClMamF2YS91dGlsL0l0ZXJhdG9yOwEAB2hhc05leHQBAAMoKVoBAARuZXh0AQAUKClMamF2YS9sYW5nL09iamVjdDsBAAdnZXRDZWxsAQAlKEkpTG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9DZWxsOwEABXdyaXRlAQALZ2V0Q2VsbFR5cGUBAAMoKUkBABZnZXRSaWNoU3RyaW5nQ2VsbFZhbHVlAQAuKClMb3JnL2FwYWNoZS9wb2kvc3MvdXNlcm1vZGVsL1JpY2hUZXh0U3RyaW5nOwEAKm9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9SaWNoVGV4dFN0cmluZwEACWdldFN0cmluZwEAJG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9EYXRlVXRpbAEAE2lzQ2VsbERhdGVGb3JtYXR0ZWQBACUoTG9yZy9hcGFjaGUvcG9pL3NzL3VzZXJtb2RlbC9DZWxsOylaAQAQZ2V0RGF0ZUNlbGxWYWx1ZQEAEigpTGphdmEvdXRpbC9EYXRlOwEADmphdmEvdXRpbC9EYXRlAQATZ2V0TnVtZXJpY0NlbGxWYWx1ZQEAAygpRAEAB3ZhbHVlT2YBABUoRClMamF2YS9sYW5nL1N0cmluZzsBABNnZXRCb29sZWFuQ2VsbFZhbHVlAQAVKFopTGphdmEvbGFuZy9TdHJpbmc7AQAOZ2V0Q2VsbEZvcm11bGEBAAVjbG9zZQEACGNvbnRhaW5zAQAbKExqYXZhL2xhbmcvQ2hhclNlcXVlbmNlOylaAQAHcmVwbGFjZQEARChMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTtMamF2YS9sYW5nL0NoYXJTZXF1ZW5jZTspTGphdmEvbGFuZy9TdHJpbmc7ACEAMQAyAAAAAQAEADMANAAAAAYAAQA1ADYAAQA3AAAAHQABAAEAAAAFKrQAAbAAAAABADgAAAAGAAEAAAAUAAEAOQA6AAEANwAAACIAAgACAAAABiortQABsQAAAAEAOAAAAAoAAgAAABcABQAYAAEAOwA8AAEANwAAACsAAgABAAAACyq3AAIqEgO1AAGxAAAAAQA4AAAADgADAAAAGgAEABIACgAbAAkAPQA6AAIANwAAAnsACQAOAAABYrsABFm7AAVZuwAGWbcAByoDKhIItgAJtgAKtgALEgy2AAu2AA23AA63AA9MuwAQWSq3ABFNLLgAEk4tA7kAEwIAOgQZBAO5ABQCALkAFQEANgUZBLkAFgEAOgYZBrkAFwEAmQD3GQa5ABgBAMAAGToHAzYIFQU2CRUINgoVChUJogDQGQcVCrkAGgIAOgsSAzoMFQqeAAcSGzoMGQvHAAwrGQy2ABynAKQBOg0ZC7kAHQEAqgAAAHMAAAAAAAAABAAAADIAAAAhAAAAZwAAAHMAAABYGQu5AB4BALkAHwEAOg2nAEQZC7gAIJkAEhkLuQAhAQC2ACI6DacALRkLuQAjAQC4ACQ6DacAHhkLuQAlAQC4ACY6DacADxkLuQAnAQA6DacAAxkNxgAcuwAGWbcABxkMtgALGQ24ACi2AAu2AA06DCsZDLYAHIQKAaf/LysSKbYAHKf/BSy2ACortgArsQAAAAIAOAAAAJIAJAAAACAALAAiADUAJAA6ACYAQwAqAFIALABxADAAdAAxAHgAMwCDADUAjgA2AJIANwCXADgAmwA7AKAAPACpAEAArABCANQARADiAEUA5QBHAO0ASAD8AEoBCABMAQsATgEXAE8BGgBRASMAUgEmAFYBKwBXAUQAWQFKADMBUABeAVYAYAFZAGEBXQBiAWEAZAA+AAAAbwAO/wBbAAcHAD8HAEAHAEEHAEIHAEMBBwBEAAD/ACAACwcAPwcAQAcAQQcAQgcAQwEHAEQHAEUBAQEAAP0AHgcARgcAPw38ACoHAD8QFg4OCx34AAX6AAX/AAgABgcAPwcAQAcAQQcAQgcAQwEAAABHAAAABgACAEgASQAJAEoASwABADcAAACnAAMAAwAAAFEBTAM9KsYASipMKxIstgAtmQAOKxIsEi62AC9MBD0rEhu2AC2aAAwrEim2AC2ZAAUEPRyZABy7AAZZtwAHEiy2AAsrtgALEiy2AAu2AA1MK7AAAAACADgAAAAyAAwAAABvAAIAcAAEAHIACAB0AAoAdgATAHcAHAB4AB4AewAwAHwAMgB/ADYAgABPAIQAPgAAAAwABP0AHgcAPwERARwAAQBMADwAAgA3AAAAJAABAAEAAAAIKrQAAbgAMLEAAAABADgAAAAKAAIAAACHAAcAjABHAAAABAABAE0AAQBOAAAAAgBP</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <filename>
+                    <xsl:value-of select="$Start/root/param"/>
+                </filename>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>383</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/Data Format.sharedparse</ParseSharedConfig>
+            <SkipBlankLines>true</SkipBlankLines>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <ContinueonError>true</ContinueonError>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="concat(substring-before($Start/root/param,'.'),'.csv')"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>571</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns3:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="concat(substring-before($Start/root/param,'.'),'.csv')"/>
+                </fileName>
+            </ns3:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Start">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>139</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="param" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <param>
+                    <xsl:value-of select="'C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\data\GL 10AUG2020.XLSX'"/>
+                </param>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Write File">
+        <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+        <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+        <pd:x>738</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <encoding>text</encoding>
+            <compressFile>None</compressFile>
+            <append>true</append>
+        </config>
+        <pd:inputBindings>
+            <ns2:WriteActivityInputTextClass>
+                <fileName>
+                    <xsl:value-of select="'C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\data\maximo.csv'"/>
+                </fileName>
+                <textContent>
+                    <xsl:value-of select="$Read-File/ns2:ReadActivityOutputTextClass/fileContent/textContent"/>
+                </textContent>
+            </ns2:WriteActivityInputTextClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Timer</pd:from>
+        <pd:to>Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java Code</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Read File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Write File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read File</pd:from>
+        <pd:to>Write File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Java Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

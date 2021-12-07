@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>Process Definition.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="param" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:if test="$Java-Code/javaCodeActivityOutput/output">
+                <param>
+                    <xsl:value-of select="$Java-Code/javaCodeActivityOutput/output"/>
+                </param>
+            </xsl:if>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="param" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1591635954290</pd:targetNamespace>
+    <pd:activity name="Java Code">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>308</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <fileName>ProcessDefinitionJavaCode</fileName>
+            <packageName>ProcessDefinition</packageName>
+            <fullsource>package ProcessDefinition;
+import java.util.*;
+import java.io.*;
+import com.tibco.security.ObfuscationEngine;;
+public class ProcessDefinitionJavaCode{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String input = "";
+	protected String output = "";
+	public String getinput() {
+		return input;
+	}
+	public void setinput(String val) {
+		input = val;
+	}
+	public String getoutput() {
+		return output;
+	}
+	public void setoutput(String val) {
+		output = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public ProcessDefinitionJavaCode() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	In  : String input
+	Out : String output
+* Available Variables: DO NOT MODIFY *****/
+
+output = new String(ObfuscationEngine.decrypt(input));}
+}
+</fullsource>
+            <inputData>
+                <row>
+                    <fieldName>input</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </inputData>
+            <outputData>
+                <row>
+                    <fieldName>output</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>ProcessDefinitionJavaCode</name>
+                    <byteCode>yv66vgAAADQAKwkACAAcCQAIAB0KAAkAHggAHwcAIAoAIQAiCgAFACMHACQHACUBAAVpbnB1dAEAEkxqYXZhL2xhbmcvU3RyaW5nOwEABm91dHB1dAEACGdldGlucHV0AQAUKClMamF2YS9sYW5nL1N0cmluZzsBAARDb2RlAQAPTGluZU51bWJlclRhYmxlAQAIc2V0aW5wdXQBABUoTGphdmEvbGFuZy9TdHJpbmc7KVYBAAlnZXRvdXRwdXQBAAlzZXRvdXRwdXQBAAY8aW5pdD4BAAMoKVYBAAZpbnZva2UBAApFeGNlcHRpb25zBwAmAQAKU291cmNlRmlsZQEAHlByb2Nlc3NEZWZpbml0aW9uSmF2YUNvZGUuamF2YQwACgALDAAMAAsMABUAFgEAAAEAEGphdmEvbGFuZy9TdHJpbmcHACcMACgAKQwAFQAqAQArUHJvY2Vzc0RlZmluaXRpb24vUHJvY2Vzc0RlZmluaXRpb25KYXZhQ29kZQEAEGphdmEvbGFuZy9PYmplY3QBABNqYXZhL2xhbmcvRXhjZXB0aW9uAQAkY29tL3RpYmNvL3NlY3VyaXR5L09iZnVzY2F0aW9uRW5naW5lAQAHZGVjcnlwdAEAFihMamF2YS9sYW5nL1N0cmluZzspW0MBAAUoW0MpVgAhAAgACQAAAAIABAAKAAsAAAAEAAwACwAAAAYAAQANAA4AAQAPAAAAHQABAAEAAAAFKrQAAbAAAAABABAAAAAGAAEAAAAKAAEAEQASAAEADwAAACIAAgACAAAABiortQABsQAAAAEAEAAAAAoAAgAAAA0ABQAOAAEAEwAOAAEADwAAAB0AAQABAAAABSq0AAKwAAAAAQAQAAAABgABAAAAEAABABQAEgABAA8AAAAiAAIAAgAAAAYqK7UAArEAAAABABAAAAAKAAIAAAATAAUAFAABABUAFgABAA8AAAA1AAIAAQAAABEqtwADKhIEtQABKhIEtQACsQAAAAEAEAAAABIABAAAABYABAAHAAoACAAQABcAAQAXABYAAgAPAAAAKwAEAAEAAAATKrsABVkqtAABuAAGtwAHtQACsQAAAAEAEAAAAAYAAQAAAB4AGAAAAAQAAQAZAAEAGgAAAAIAGw==</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings>
+            <javaCodeActivityInput>
+                <input>
+                    <xsl:value-of select="$Start/root/param"/>
+                </input>
+            </javaCodeActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Java Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Java Code</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

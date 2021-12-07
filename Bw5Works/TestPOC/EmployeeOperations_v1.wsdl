@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1590242338603" xmlns:ns0="www.tibco.com/GetEmployee" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1590242338603">
+    <wsdl:types>
+        <xs:schema xmlns="www.tibco.com/GetEmployee" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="www.tibco.com/GetEmployee" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="GetEmployeeRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Emp_Code" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetEmployeeResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Status" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Emp_Code" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Emp_Name" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Emp_Designation" type="xs:string" minOccurs="0"/>
+                        <xs:element name="Emp_Age" type="xs:string" minOccurs="0"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="EmployeeOperations">
+        <wsdl:port name="EmpOperationsEndpoint1" binding="tns:EmpOperationsEndpoint1Binding">
+            <soap:address location="https://localhost:8084/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="EmpOperations">
+        <wsdl:operation name="OpGetEmployee">
+            <wsdl:input message="tns:GetEmployeeRequest"/>
+            <wsdl:output message="tns:GetEmployeeResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="EmpOperationsEndpoint1Binding" type="tns:EmpOperations">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="OpGetEmployee">
+            <soap:operation style="document" soapAction="/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1/OpGetEmployee"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="GetEmployeeRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="GetEmployeeResponse"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="GetEmployeeRequest">
+        <wsdl:part name="GetEmployeeRequest" element="ns0:GetEmployeeRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetEmployeeResponse">
+        <wsdl:part name="GetEmployeeResponse" element="ns0:GetEmployeeResponse"/>
+    </wsdl:message>
+</wsdl:definitions>

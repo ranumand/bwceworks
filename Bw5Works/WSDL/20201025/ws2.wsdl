@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SamplwWSAbstract" targetNamespace="http://www.tibco.com/SamplwWSAbstract/" xmlns:soapenc11="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns0="http://www.samplewebservice.com/samples" xmlns:bwh="http://www.tibco.com/eb8fe056de1744c7bb041b8b946fb802/SOAPServiceBinding" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.tibco.com/SamplwWSAbstract/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/">
+<wsdl:types>
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.samplewebservice.com/samples" xmlns:tns="http://www.samplewebservice.com/samples" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:element name="InputSchema" type="tns:InputSchema"/><xsd:complexType name="InputSchema"><xsd:sequence><xsd:element maxOccurs="1" minOccurs="0" name="Number1" type="xsd:int"/><xsd:element maxOccurs="1" minOccurs="0" name="Number2" type="xsd:int"/></xsd:sequence></xsd:complexType><xsd:element name="OutputSchema" type="tns:OutputSchema"/><xsd:complexType name="OutputSchema"><xsd:sequence><xsd:element maxOccurs="1" minOccurs="0" name="Response" type="xsd:int"/></xsd:sequence></xsd:complexType><xsd:element name="FaultSchema" type="tns:FaultSchema"/><xsd:complexType name="FaultSchema"><xsd:sequence><xsd:element maxOccurs="1" minOccurs="0" name="Msg" type="xsd:string"/><xsd:element maxOccurs="1" minOccurs="0" name="Code" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:schema>
+<xsd:schema targetNamespace="http://www.tibco.com/SamplwWSAbstract/" xmlns="http://www.tibco.com/SamplwWSAbstract/" xmlns:tns="http://www.samplewebservice.com/samples" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:import namespace="http://www.samplewebservice.com/samples"/><xsd:element name="OpAdd"><xsd:complexType><xsd:sequence><xsd:element name="in" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="OpAddResponse"><xsd:complexType><xsd:sequence><xsd:element name="out" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="OpSubtract"><xsd:complexType><xsd:sequence><xsd:element name="in" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="OpSubtractResponse"><xsd:complexType><xsd:sequence><xsd:element name="out" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="OpAddFault"><xsd:complexType><xsd:sequence><xsd:element name="OpAddFault" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="OpSubtractFault"><xsd:complexType><xsd:sequence><xsd:element name="OpSubtractFault" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element></xsd:schema>
+</wsdl:types>
+<wsdl:message name="OpSubtractRequest">
+<wsdl:part name="Request" element="tns0:InputSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:message name="OpSubtractResponse">
+<wsdl:part name="Response" element="tns0:OutputSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:message name="OpAddResponse">
+<wsdl:part name="OutputResponse" element="tns0:OutputSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:message name="OpAddRequest">
+<wsdl:part name="InputRequest" element="tns0:InputSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:message name="OpSubtractFault">
+<wsdl:part name="Error" element="tns0:FaultSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:message name="OpAddFault">
+<wsdl:part name="Error" element="tns0:FaultSchema">
+</wsdl:part>
+</wsdl:message>
+<wsdl:portType name="SamplwWSAbstract">
+<wsdl:operation name="OpAdd">
+<wsdl:input message="tns:OpAddRequest">
+</wsdl:input>
+<wsdl:output message="tns:OpAddResponse">
+</wsdl:output>
+<wsdl:fault name="fault" message="tns:OpAddFault">
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="OpSubtract">
+<wsdl:input message="tns:OpSubtractRequest">
+</wsdl:input>
+<wsdl:output message="tns:OpSubtractResponse">
+</wsdl:output>
+<wsdl:fault name="fault" message="tns:OpSubtractFault">
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="SOAPServiceBinding" type="tns:SamplwWSAbstract">
+<soap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="OpAdd">
+<soap11:operation soapAction="OpAdd" style="document" wsdl:required="true"/>
+<wsdl:input>
+<soap11:body parts="InputRequest" use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap11:body parts="OutputResponse" use="literal"/>
+</wsdl:output>
+<wsdl:fault name="OpAddFault">
+<soap11:fault name="OpAddFault"/>
+</wsdl:fault>
+</wsdl:operation>
+<wsdl:operation name="OpSubtract">
+<soap11:operation soapAction="OpSubtract" style="document" wsdl:required="true"/>
+<wsdl:input>
+<soap11:body parts="Request" use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap11:body parts="Response" use="literal"/>
+</wsdl:output>
+<wsdl:fault name="OpSubtractFault">
+<soap11:fault name="OpSubtractFault"/>
+</wsdl:fault>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="SamplwWSAbstract">
+<wsdl:port name="SamplwWSAbstractPort" binding="tns:SOAPServiceBinding">
+<soap11:address location="http://localhost:9028/SOAPServiceBinding/samplwWSAbstract/"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

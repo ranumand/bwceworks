@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pfx="http://xmlns.example.com/1590182964417" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="www.tibco.com/GetEmployee">
+    <wsdl:import namespace="http://xmlns.example.com/1590182964417" location="/SharedResources/WSDL/EmployeeOperations.wsdl"/>
+    <pd:name>BusinessProcess/MainProcess/OpOperation2.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:Operation2Input"/>
+    <pd:startX>150</pd:startX>
+    <pd:startY>64</pd:startY>
+    <pd:returnBindings>
+        <pfx:Operation2Response>
+            <Operation2Response>
+                <ns:Operation2Output>
+                    <xsl:if test="$Start/pfx:Operation2Input/Operation2Input/ns:Operation2Input/ns:Input1">
+                        <ns:Output1>
+                            <xsl:value-of select="$Start/pfx:Operation2Input/Operation2Input/ns:Operation2Input/ns:Input1"/>
+                        </ns:Output1>
+                    </xsl:if>
+                </ns:Operation2Output>
+            </Operation2Response>
+        </pfx:Operation2Response>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:Operation2Response"/>
+    <pd:endX>450</pd:endX>
+    <pd:endY>64</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1602615885727</pd:targetNamespace>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

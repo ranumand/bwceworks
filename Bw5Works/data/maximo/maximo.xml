@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   
+      <Maximo>
+         <GlCreditAcct>123</GlCreditAcct>
+         <GlDebiAcct>123</GlDebiAcct>
+         <Status />
+         <WONum>123</WONum>
+      </Maximo>
+      <Maximo>
+         <GlCreditAcct>123</GlCreditAcct>
+         <GlDebiAcct>123</GlDebiAcct>
+         <Status />
+         <WONum>123</WONum>
+      </Maximo>
+   
+</root>

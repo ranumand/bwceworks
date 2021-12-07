@@ -1,0 +1,52 @@
+[02] Tue 02Sep14 00:00:01 - (171689) Connected to 49.3.81.182 (local address 49.80.226.138, port 21)
+[21] Tue 02Sep14 00:00:01 - (171689) 220 Momentum FTP Server PAT (TD Bank)
+[20] Tue 02Sep14 00:00:01 - (171689) USER arsl4807
+[21] Tue 02Sep14 00:00:01 - (171689) 331 User name okay, need password.
+[20] Tue 02Sep14 00:00:01 - (171689) PASS **********
+[02] Tue 02Sep14 00:00:01 - (171689) User "arsl4807" logged in
+[21] Tue 02Sep14 00:00:01 - (171689) 230-User logged in, proceed.
+[21] Tue 02Sep14 00:00:01 - (171689) 230 Welcome to TD Toronto Momentum
+[20] Tue 02Sep14 00:00:01 - (171689) CWD Dropoff
+[21] Tue 02Sep14 00:00:01 - (171689) 250 Directory changed to /Dropoff
+[20] Tue 02Sep14 00:00:01 - (171689) PORT 49,3,81,182,225,51
+[21] Tue 02Sep14 00:00:01 - (171689) 200 PORT command successful.
+[20] Tue 02Sep14 00:00:01 - (171689) STOR ARSLOADTEST.1.log.20140902
+[11] Tue 02Sep14 00:00:01 - (171689) Receiving file "D:\FTPHome\arsl4807\Dropoff\ARSLOADTEST.1.log.20140902"
+[21] Tue 02Sep14 00:00:01 - (171689) 150 Opening BINARY mode data connection for ARSLOADTEST.1.log.20140902.
+[11] Tue 02Sep14 00:00:01 - (171689) Received file "D:\FTPHome\arsl4807\Dropoff\ARSLOADTEST.1.log.20140902" successfully (25,002.38 KB/sec - 4,019,582 Bytes)
+[21] Tue 02Sep14 00:00:01 - (171689) 226 Transfer complete. 4,019,582 bytes transferred. 25,002.38 KB/sec.
+[20] Tue 02Sep14 00:00:01 - (171689) PORT 49,3,81,182,225,52
+[21] Tue 02Sep14 00:00:01 - (171689) 200 PORT command successful.
+[20] Tue 02Sep14 00:00:01 - (171689) LIST ARSLOADTEST.1.log.20140902
+[21] Tue 02Sep14 00:00:01 - (171689) 150 Opening ASCII mode data connection for /bin/ls.
+[21] Tue 02Sep14 00:00:01 - (171689) 226 Transfer complete. 83 bytes transferred. 0.08 KB/sec.
+[20] Tue 02Sep14 00:00:01 - (171689) QUIT
+[21] Tue 02Sep14 00:00:01 - (171689) 221 Goodbye, closing session.
+[02] Tue 02Sep14 00:00:01 - (171689) User "arsl4807" logged out
+[02] Tue 02Sep14 00:00:01 - (171689) Closed session
+[02] Tue 02Sep14 00:00:01 - (171690) Connected to 49.3.81.182 (local address 49.80.226.138, port 21)
+[21] Tue 02Sep14 00:00:01 - (171690) 220 Momentum FTP Server PAT (TD Bank)
+[20] Tue 02Sep14 00:00:01 - (171690) USER arsl4807
+[21] Tue 02Sep14 00:00:01 - (171690) 331 User name okay, need password.
+[20] Tue 02Sep14 00:00:01 - (171690) PASS **********
+[02] Tue 02Sep14 00:00:01 - (171690) User "arsl4807" logged in
+[21] Tue 02Sep14 00:00:01 - (171690) 230-User logged in, proceed.
+[21] Tue 02Sep14 00:00:01 - (171690) 230 Welcome to TD Toronto Momentum
+[20] Tue 02Sep14 00:00:01 - (171690) CWD Dropoff
+[21] Tue 02Sep14 00:00:01 - (171690) 250 Directory changed to /Dropoff
+[20] Tue 02Sep14 00:00:01 - (171690) PORT 49,3,81,182,225,51
+[21] Tue 02Sep14 00:00:01 - (171690) 200 PORT command successful.
+[20] Tue 02Sep14 00:00:01 - (171690) STOR ARSLOADTEST.1.log.20140902
+[11] Tue 02Sep14 00:00:01 - (171690) Receiving file "D:\FTPHome\arsl4807\Dropoff\ARSLOADTEST.1.log.20140902"
+[21] Tue 02Sep14 00:00:01 - (171690) 150 Opening BINARY mode data connection for ARSLOADTEST.1.log.20140902.
+[11] Tue 02Sep14 00:00:01 - (171690) Received file "D:\FTPHome\arsl4807\Dropoff\ARSLOADTEST.1.log.20140902" successfully (25,002.38 KB/sec - 4,019,582 Bytes)
+[21] Tue 02Sep14 00:00:01 - (171690) 226 Transfer complete. 4,019,582 bytes transferred. 25,002.38 KB/sec.
+[20] Tue 02Sep14 00:00:01 - (171690) PORT 49,3,81,182,225,52
+[21] Tue 02Sep14 00:00:01 - (171690) 200 PORT command successful.
+[20] Tue 02Sep14 00:00:01 - (171690) LIST ARSLOADTEST.1.log.20140902
+[21] Tue 02Sep14 00:00:01 - (171690) 150 Opening ASCII mode data connection for /bin/ls.
+[21] Tue 02Sep14 00:00:01 - (171690) 226 Transfer complete. 83 bytes transferred. 0.08 KB/sec.
+[20] Tue 02Sep14 00:00:01 - (171690) QUIT
+[21] Tue 02Sep14 00:00:01 - (171690) 221 Goodbye, closing session.
+[02] Tue 02Sep14 00:00:01 - (171690) User "arsl4807" logged out
+[02] Tue 02Sep14 00:00:01 - (171690) Closed session

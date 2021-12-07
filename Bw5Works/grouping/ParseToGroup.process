@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pfx="urn:td.tse.momtrans/v1" xmlns:pfx2="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx3="www.tibco.com/plugin/java/xmlSchema/com.tibco.bd.tdftp.FTPRecords" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="www.tibco.com/plugin/java/XmlToJavaActivityInput" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns6="www.tibco.com/plugin/java/JavaMethodActivityOutput" xmlns:ns5="www.tibco.com/plugin/java/XmlToJavaActivityOutput" xmlns:ns7="www.tibco.com/plugin/java/JavaToXmlActivityInput" xmlns:pd="http://xmlns.tibco.com/bw/process/2003">
+    <xsd:import namespace="urn:td.tse.momtrans/v1" schemaLocation="/Resources/Schema/FTPLogParse.xsd"/>
+    <pd:name>ParseToGroup.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>67</pd:startX>
+    <pd:startY>67</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>841</pd:endX>
+    <pd:endY>60</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <ParseFTP>
+            <xsd:element name="loopData">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="processID" type="xsd:string"/>
+                        <xsd:element name="count" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </ParseFTP>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1409778734935</pd:targetNamespace>
+    <pd:activity name="Read Log File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>245</pd:x>
+        <pd:y>69</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns2:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="&quot;C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\grouping\servuftp.txt&quot;"/>
+                </fileName>
+            </ns2:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse FTP log data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>409</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <InputType>String</InputType>
+            <Encoding>ASCII</Encoding>
+            <SpecifyStartRecord>false</SpecifyStartRecord>
+            <ParseSharedConfig>/Resources/Parse/FTPLog.sharedparse</ParseSharedConfig>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <text>
+                    <xsl:value-of select="$Read-Log-File/ns:ReadActivityOutputTextClass/fileContent/textContent"/>
+                </text>
+                <noOfRecords>
+                    <xsl:value-of select="10000"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Massage records into structures">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>569</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <element ref="pfx:ftRecords"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:ftRecords>
+                <xsl:for-each select="$Parse-FTP-log-data/Output/Rows/Line">
+                    <xsl:variable name="id" select="processID"/>
+                    <xsl:variable name="line" select="content"/>
+                    <xsl:choose>
+                        <xsl:when test="starts-with($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Connect)">
+                            <pfx:record>
+                                <pfx:processID>
+                                    <xsl:value-of select="$id"/>
+                                </pfx:processID>
+                                <pfx:ipAddress>
+                                    <xsl:value-of select="substring-before(tib:trim(substring-after($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Connect)), &quot; &quot;)"/>
+                                </pfx:ipAddress>
+                                <pfx:content>
+                                    <xsl:value-of select="$line"/>
+                                </pfx:content>
+                            </pfx:record>
+                        </xsl:when>
+                        <xsl:when test="starts-with($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/User)">
+                            <pfx:record>
+                                <pfx:processID>
+                                    <xsl:value-of select="$id"/>
+                                </pfx:processID>
+                                <pfx:user>
+                                    <xsl:value-of select="tib:trim(substring-after($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/User))"/>
+                                </pfx:user>
+                                <pfx:content>
+                                    <xsl:value-of select="$line"/>
+                                </pfx:content>
+                            </pfx:record>
+                        </xsl:when>
+                        <xsl:when test="starts-with($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Store)">
+                            <pfx:record>
+                                <pfx:processID>
+                                    <xsl:value-of select="$id"/>
+                                </pfx:processID>
+                                <pfx:fileTransfer>
+                                    <pfx:mode>
+                                        <xsl:value-of select="&quot;R&quot;"/>
+                                    </pfx:mode>
+                                    <pfx:fileName>
+                                        <xsl:value-of select="tib:trim(substring-after($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Store))"/>
+                                    </pfx:fileName>
+                                </pfx:fileTransfer>
+                                <pfx:content>
+                                    <xsl:value-of select="$line"/>
+                                </pfx:content>
+                            </pfx:record>
+                        </xsl:when>
+                        <xsl:when test="starts-with($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Retrieve)">
+                            <pfx:record>
+                                <pfx:processID>
+                                    <xsl:value-of select="$id"/>
+                                </pfx:processID>
+                                <pfx:fileTransfer>
+                                    <pfx:mode>
+                                        <xsl:value-of select="&quot;S&quot;"/>
+                                    </pfx:mode>
+                                    <pfx:fileName>
+                                        <xsl:value-of select="tib:trim(substring-after($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/Retrieve))"/>
+                                    </pfx:fileName>
+                                </pfx:fileTransfer>
+                                <pfx:content>
+                                    <xsl:value-of select="$line"/>
+                                </pfx:content>
+                            </pfx:record>
+                        </xsl:when>
+                        <xsl:when test="starts-with($line, $_globalVariables/ns1:GlobalVariables/TDParse/Static/SSL)">
+                            <pfx:record>
+                                <pfx:processID>
+                                    <xsl:value-of select="$id"/>
+                                </pfx:processID>
+                                <pfx:sshMode>
+                                    <xsl:value-of select="1"/>
+                                </pfx:sshMode>
+                                <pfx:content>
+                                    <xsl:value-of select="$line"/>
+                                </pfx:content>
+                            </pfx:record>
+                        </xsl:when>
+                        <xsl:otherwise/>
+                    </xsl:choose>
+                </xsl:for-each>
+            </pfx:ftRecords>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map-Data-1">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>710</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <element ref="pfx:ftRecords"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:ftRecords>
+                <xsl:for-each-group select="$Massage-records-into-structures/pfx:ftRecords/pfx:record" group-by="pfx:processID">
+                    <pfx:record>
+                        <pfx:processID>
+                            <xsl:value-of select="pfx:processID"/>
+                        </pfx:processID>
+                        <xsl:if test="current-group()[1]/pfx:ipAddress">
+                            <pfx:ipAddress>
+                                <xsl:value-of select="current-group()[1]/pfx:ipAddress"/>
+                            </pfx:ipAddress>
+                        </xsl:if>
+                        <xsl:if test="current-group()[2]/pfx:user">
+                            <pfx:user>
+                                <xsl:value-of select="current-group()[2]/pfx:user"/>
+                            </pfx:user>
+                        </xsl:if>
+                        <xsl:if test="current-group()[1]/pfx:sshMode">
+                            <pfx:sshMode>
+                                <xsl:value-of select="current-group()[1]/pfx:sshMode"/>
+                            </pfx:sshMode>
+                        </xsl:if>
+                        <xsl:copy-of select="current-group()/pfx:fileTransfer"/>
+                        <xsl:if test="current-group()[1]/pfx:content">
+                            <pfx:content>
+                                <xsl:value-of select="current-group()[1]/pfx:content"/>
+                            </pfx:content>
+                        </xsl:if>
+                    </pfx:record>
+                </xsl:for-each-group>
+            </pfx:ftRecords>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>224</pd:x>
+        <pd:y>179</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Data" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="Mobile" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="City" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Data>
+                    <Name>
+                        <xsl:value-of select="'A'"/>
+                    </Name>
+                    <Mobile>
+                        <xsl:value-of select="123"/>
+                    </Mobile>
+                    <City>
+                        <xsl:value-of select="&quot;HYD&quot;"/>
+                    </City>
+                </Data>
+                <Data>
+                    <Name>
+                        <xsl:value-of select="'A'"/>
+                    </Name>
+                    <Mobile>
+                        <xsl:value-of select="123"/>
+                    </Mobile>
+                    <City>
+                        <xsl:value-of select="&quot;NY&quot;"/>
+                    </City>
+                </Data>
+                <Data>
+                    <Name>
+                        <xsl:value-of select="'B'"/>
+                    </Name>
+                    <Mobile>
+                        <xsl:value-of select="456"/>
+                    </Mobile>
+                    <City>
+                        <xsl:value-of select="&quot;HYD1&quot;"/>
+                    </City>
+                </Data>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map-Data-2">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>414</pd:x>
+        <pd:y>179</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Data" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="Mobile" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="City" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Map-Data/root/Data[City=$Map-Data-3/root/Data]">
+                    <Data>
+                        <xsl:if test="Name">
+                            <Name>
+                                <xsl:value-of select="Name"/>
+                            </Name>
+                        </xsl:if>
+                        <xsl:if test="Mobile">
+                            <Mobile>
+                                <xsl:value-of select="Mobile"/>
+                            </Mobile>
+                        </xsl:if>
+                        <xsl:if test="City">
+                            <City>
+                                <xsl:value-of select="City"/>
+                            </City>
+                        </xsl:if>
+                    </Data>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map-Data-3">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>105</pd:x>
+        <pd:y>184</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Data" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="Mobile" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="City" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Data>
+                    <Name>
+                        <xsl:value-of select="'ABC'"/>
+                    </Name>
+                    <Mobile>
+                        <xsl:value-of select="5435"/>
+                    </Mobile>
+                    <City>
+                        <xsl:value-of select="'HYD'"/>
+                    </City>
+                </Data>
+                <Data>
+                    <Name>
+                        <xsl:value-of select="'DEF'"/>
+                    </Name>
+                    <Mobile>
+                        <xsl:value-of select="5435"/>
+                    </Mobile>
+                    <City>
+                        <xsl:value-of select="'HYD'"/>
+                    </City>
+                </Data>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Read Log File</pd:from>
+        <pd:to>Parse FTP log data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse FTP log data</pd:from>
+        <pd:to>Massage records into structures</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Read Log File</pd:to>
+        <pd:xpathDescription>d</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Massage records into structures</pd:from>
+        <pd:to>Map-Data-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map-Data-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Map-Data-3</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Map-Data-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map-Data-2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map-Data-3</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <name>Data-Format-1</name>
+    <resourceType>ae.shared.ParseSharedResource</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <FormatType>Delimiter separated</FormatType>
+        <ColumnSeparator>,</ColumnSeparator>
+        <ColSeparatorRule>Treat all characters as entered as a single column separator string</ColSeparatorRule>
+        <LineSeparator>
+</LineSeparator>
+        <FillCharacter>Space</FillCharacter>
+        <LineLength>3</LineLength>
+        <DataFormat>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="GLDEBITACCT" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="GLCREDITACCT" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="FINANCIALPERIOD" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TRANSDATE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ENTERDATE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TRANSTYPE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ITEMNUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="STORELOC" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="BINNUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="QUANTITY" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="FROMSTORELOC" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="UNITCOST" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="LINECOST" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="PONUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="POLINENUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="INVOICENUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="INVOICELINENUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="COSTLINENUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="WONUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="WPOPERATION" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="EQNUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="LOCATION" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CLAIMNUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CURRENCYCODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CURRENCYUNITCOST" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CURRENCYLINECOST" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="EXCHANGERATE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE1" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE3" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE4" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE5" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE6" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE7" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="JE8" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="LABORCODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CRAFT" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="REGULARHRS" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="OTHRS" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TOOLNUM" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="VENDOR" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ENTERBY" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="MEMO" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="FROMLOT" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TOLOT" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="LOADEDCOST" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX1CODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX1" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX2CODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX3CODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX3" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX4CODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX4" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX5CODE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="TAX5" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="PRORATED" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="AGREEMENTPOTYPE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="PRORATESERVICE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="CURRENCYCODE2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="EXCHANGERATE2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="LINECOST2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="SOURCESYSID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="OWNERSYSID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="EXTERNALREFID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="APISEQ" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="SENDERSYSID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ISSUEID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="INVTRANSID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="ROWSTAMP" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA1" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA2" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA3" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA4" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA5" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA6" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA7" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA8" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA9" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="USERDATA10" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="BATCHID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="BATCHLINEID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="UTRANSTYPE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="SOURCEID" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="APISITE" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="IMPORTSTATUS" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="IMPORTTIMESTAMP" type="xsd:string" minOccurs="0"/>
+                        <xsd:element name="IMPORTMESSAGE" type="xsd:string" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </DataFormat>
+    </config>
+</BWSharedResource>

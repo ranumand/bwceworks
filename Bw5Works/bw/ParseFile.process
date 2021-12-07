@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns5="www.tibco.com/plugin/Sleep" xmlns:pfx="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:pfx2="com/tibco/pe/commands" xmlns:ns="www.tibco.com/plugin/java/JavaMethodActivityInput" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns4="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/file/v2">
+    <pd:name>ParseFile.process</pd:name>
+    <pd:startName>Timer</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="Timer">
+        <pd:type>com.tibco.plugin.timer.TimerEventSource</pd:type>
+        <pd:resourceType>ae.activities.timer</pd:resourceType>
+        <pd:x>50</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <StartTime>1597686720000</StartTime>
+            <Frequency>false</Frequency>
+            <TimeInterval>1</TimeInterval>
+            <FrequencyIndex>Day</FrequencyIndex>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>325</pd:endX>
+    <pd:endY>204</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1595530181084</pd:targetNamespace>
+    <pd:activity name="EndLog">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>882</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx:ActivityInput>
+                <message>
+                    <xsl:value-of select="' Process End'"/>
+                </message>
+            </pfx:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="External Command">
+        <pd:type>com.tibco.plugin.cmdexec.CmdExecActivity</pd:type>
+        <pd:resourceType>ae.activities.CmdExecActivity</pd:resourceType>
+        <pd:x>961</pd:x>
+        <pd:y>194</pd:y>
+        <config>
+            <outputToString>true</outputToString>
+            <lineSplit>None</lineSplit>
+        </config>
+        <pd:inputBindings>
+            <CmdInput>
+                <command>
+                    <xsl:value-of select="'AppManage.exe -stop -app Parse/bw -domain TIBCODEV -user tibco -pw tibco'"/>
+                </command>
+                <workingDirectory>
+                    <xsl:value-of select="'C:\tib14\tra\5.11\bin'"/>
+                </workingDirectory>
+            </CmdInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="External-Command-1">
+        <pd:type>com.tibco.plugin.cmdexec.CmdExecActivity</pd:type>
+        <pd:resourceType>ae.activities.CmdExecActivity</pd:resourceType>
+        <pd:x>629</pd:x>
+        <pd:y>199</pd:y>
+        <config>
+            <outputToString>true</outputToString>
+            <lineSplit>None</lineSplit>
+        </config>
+        <pd:inputBindings>
+            <CmdInput>
+                <command>
+                    <xsl:value-of select="'AppManage.exe -start -app Parse/bw -domain TIBCODEV -user tibco -pw tibco'"/>
+                </command>
+                <workingDirectory>
+                    <xsl:value-of select="'C:\tib14\tra\5.11\bin'"/>
+                </workingDirectory>
+            </CmdInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="JMS Queue Sender">
+        <pd:type>com.tibco.plugin.jms.JMSQueueSendActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueSendActivity</pd:resourceType>
+        <pd:x>758</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>sample2</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <DeliveryDelay>0</DeliveryDelay>
+            <ConnectionReference>/JMS Connection.sharedjmscon</ConnectionReference>
+            <InDataxsdString>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="GLDEBITACCT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="GLCREDITACCT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FINANCIALPERIOD" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TRANSDATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ENTERDATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TRANSTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ITEMNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="STORELOC" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BINNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="QUANTITY" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FROMSTORELOC" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="UNITCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LINECOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PONUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="POLINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVOICENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVOICELINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="COSTLINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WONUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WPOPERATION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EQNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LOCATION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CLAIMNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYCODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYUNITCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYLINECOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXCHANGERATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE6" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE7" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE8" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LABORCODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CRAFT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="REGULARHRS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="OTHRS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TOOLNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="VENDOR" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ENTERBY" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="MEMO" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FROMLOT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TOLOT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LOADEDCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX1CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX2CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX3CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX4CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX5CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PRORATED" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="AGREEMENTPOTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PRORATESERVICE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYCODE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXCHANGERATE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LINECOST2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SOURCESYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="OWNERSYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXTERNALREFID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="APISEQ" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SENDERSYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ISSUEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVTRANSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ROWSTAMP" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA6" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA7" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA8" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA9" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA10" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BATCHID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BATCHLINEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="UTRANSTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SOURCEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="APISITE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTSTATUS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTTIMESTAMP" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTMESSAGE" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </InDataxsdString>
+        </config>
+        <pd:inputBindings>
+            <ns4:ActivityInput>
+                <Body>
+                    <root>
+                        <xsl:for-each select="$Map-Data/root/root">
+                            <root>
+                                <xsl:if test="GLDEBITACCT">
+                                    <GLDEBITACCT>
+                                        <xsl:value-of select="GLDEBITACCT"/>
+                                    </GLDEBITACCT>
+                                </xsl:if>
+                                <xsl:if test="GLCREDITACCT">
+                                    <GLCREDITACCT>
+                                        <xsl:value-of select="GLCREDITACCT"/>
+                                    </GLCREDITACCT>
+                                </xsl:if>
+                                <xsl:if test="FINANCIALPERIOD">
+                                    <FINANCIALPERIOD>
+                                        <xsl:value-of select="FINANCIALPERIOD"/>
+                                    </FINANCIALPERIOD>
+                                </xsl:if>
+                                <xsl:if test="TRANSDATE">
+                                    <TRANSDATE>
+                                        <xsl:value-of select="TRANSDATE"/>
+                                    </TRANSDATE>
+                                </xsl:if>
+                                <xsl:if test="ENTERDATE">
+                                    <ENTERDATE>
+                                        <xsl:value-of select="ENTERDATE"/>
+                                    </ENTERDATE>
+                                </xsl:if>
+                                <xsl:if test="TRANSTYPE">
+                                    <TRANSTYPE>
+                                        <xsl:value-of select="TRANSTYPE"/>
+                                    </TRANSTYPE>
+                                </xsl:if>
+                                <xsl:if test="DESCRIPTION">
+                                    <DESCRIPTION>
+                                        <xsl:value-of select="DESCRIPTION"/>
+                                    </DESCRIPTION>
+                                </xsl:if>
+                                <xsl:if test="ITEMNUM">
+                                    <ITEMNUM>
+                                        <xsl:value-of select="ITEMNUM"/>
+                                    </ITEMNUM>
+                                </xsl:if>
+                                <xsl:if test="STORELOC">
+                                    <STORELOC>
+                                        <xsl:value-of select="STORELOC"/>
+                                    </STORELOC>
+                                </xsl:if>
+                                <xsl:if test="BINNUM">
+                                    <BINNUM>
+                                        <xsl:value-of select="BINNUM"/>
+                                    </BINNUM>
+                                </xsl:if>
+                                <xsl:if test="QUANTITY">
+                                    <QUANTITY>
+                                        <xsl:value-of select="QUANTITY"/>
+                                    </QUANTITY>
+                                </xsl:if>
+                                <xsl:if test="FROMSTORELOC">
+                                    <FROMSTORELOC>
+                                        <xsl:value-of select="FROMSTORELOC"/>
+                                    </FROMSTORELOC>
+                                </xsl:if>
+                                <xsl:if test="UNITCOST">
+                                    <UNITCOST>
+                                        <xsl:value-of select="UNITCOST"/>
+                                    </UNITCOST>
+                                </xsl:if>
+                                <xsl:if test="LINECOST">
+                                    <LINECOST>
+                                        <xsl:value-of select="LINECOST"/>
+                                    </LINECOST>
+                                </xsl:if>
+                                <xsl:if test="PONUM">
+                                    <PONUM>
+                                        <xsl:value-of select="PONUM"/>
+                                    </PONUM>
+                                </xsl:if>
+                                <xsl:if test="POLINENUM">
+                                    <POLINENUM>
+                                        <xsl:value-of select="POLINENUM"/>
+                                    </POLINENUM>
+                                </xsl:if>
+                                <xsl:if test="INVOICENUM">
+                                    <INVOICENUM>
+                                        <xsl:value-of select="INVOICENUM"/>
+                                    </INVOICENUM>
+                                </xsl:if>
+                                <xsl:if test="INVOICELINENUM">
+                                    <INVOICELINENUM>
+                                        <xsl:value-of select="INVOICELINENUM"/>
+                                    </INVOICELINENUM>
+                                </xsl:if>
+                                <xsl:if test="COSTLINENUM">
+                                    <COSTLINENUM>
+                                        <xsl:value-of select="COSTLINENUM"/>
+                                    </COSTLINENUM>
+                                </xsl:if>
+                                <xsl:if test="WONUM">
+                                    <WONUM>
+                                        <xsl:value-of select="WONUM"/>
+                                    </WONUM>
+                                </xsl:if>
+                                <xsl:if test="WPOPERATION">
+                                    <WPOPERATION>
+                                        <xsl:value-of select="WPOPERATION"/>
+                                    </WPOPERATION>
+                                </xsl:if>
+                                <xsl:if test="EQNUM">
+                                    <EQNUM>
+                                        <xsl:value-of select="EQNUM"/>
+                                    </EQNUM>
+                                </xsl:if>
+                                <xsl:if test="LOCATION">
+                                    <LOCATION>
+                                        <xsl:value-of select="LOCATION"/>
+                                    </LOCATION>
+                                </xsl:if>
+                                <xsl:if test="CLAIMNUM">
+                                    <CLAIMNUM>
+                                        <xsl:value-of select="CLAIMNUM"/>
+                                    </CLAIMNUM>
+                                </xsl:if>
+                                <xsl:if test="CURRENCYCODE">
+                                    <CURRENCYCODE>
+                                        <xsl:value-of select="CURRENCYCODE"/>
+                                    </CURRENCYCODE>
+                                </xsl:if>
+                                <xsl:if test="CURRENCYUNITCOST">
+                                    <CURRENCYUNITCOST>
+                                        <xsl:value-of select="CURRENCYUNITCOST"/>
+                                    </CURRENCYUNITCOST>
+                                </xsl:if>
+                                <xsl:if test="CURRENCYLINECOST">
+                                    <CURRENCYLINECOST>
+                                        <xsl:value-of select="CURRENCYLINECOST"/>
+                                    </CURRENCYLINECOST>
+                                </xsl:if>
+                                <xsl:if test="EXCHANGERATE">
+                                    <EXCHANGERATE>
+                                        <xsl:value-of select="EXCHANGERATE"/>
+                                    </EXCHANGERATE>
+                                </xsl:if>
+                                <xsl:if test="JE1">
+                                    <JE1>
+                                        <xsl:value-of select="JE1"/>
+                                    </JE1>
+                                </xsl:if>
+                                <xsl:if test="JE2">
+                                    <JE2>
+                                        <xsl:value-of select="JE2"/>
+                                    </JE2>
+                                </xsl:if>
+                                <xsl:if test="JE3">
+                                    <JE3>
+                                        <xsl:value-of select="JE3"/>
+                                    </JE3>
+                                </xsl:if>
+                                <xsl:if test="JE4">
+                                    <JE4>
+                                        <xsl:value-of select="JE4"/>
+                                    </JE4>
+                                </xsl:if>
+                                <xsl:if test="JE5">
+                                    <JE5>
+                                        <xsl:value-of select="JE5"/>
+                                    </JE5>
+                                </xsl:if>
+                                <xsl:if test="JE6">
+                                    <JE6>
+                                        <xsl:value-of select="JE6"/>
+                                    </JE6>
+                                </xsl:if>
+                                <xsl:if test="JE7">
+                                    <JE7>
+                                        <xsl:value-of select="JE7"/>
+                                    </JE7>
+                                </xsl:if>
+                                <xsl:if test="JE8">
+                                    <JE8>
+                                        <xsl:value-of select="JE8"/>
+                                    </JE8>
+                                </xsl:if>
+                                <xsl:if test="LABORCODE">
+                                    <LABORCODE>
+                                        <xsl:value-of select="LABORCODE"/>
+                                    </LABORCODE>
+                                </xsl:if>
+                                <xsl:if test="CRAFT">
+                                    <CRAFT>
+                                        <xsl:value-of select="CRAFT"/>
+                                    </CRAFT>
+                                </xsl:if>
+                                <xsl:if test="REGULARHRS">
+                                    <REGULARHRS>
+                                        <xsl:value-of select="REGULARHRS"/>
+                                    </REGULARHRS>
+                                </xsl:if>
+                                <xsl:if test="OTHRS">
+                                    <OTHRS>
+                                        <xsl:value-of select="OTHRS"/>
+                                    </OTHRS>
+                                </xsl:if>
+                                <xsl:if test="TOOLNUM">
+                                    <TOOLNUM>
+                                        <xsl:value-of select="TOOLNUM"/>
+                                    </TOOLNUM>
+                                </xsl:if>
+                                <xsl:if test="VENDOR">
+                                    <VENDOR>
+                                        <xsl:value-of select="VENDOR"/>
+                                    </VENDOR>
+                                </xsl:if>
+                                <xsl:if test="ENTERBY">
+                                    <ENTERBY>
+                                        <xsl:value-of select="ENTERBY"/>
+                                    </ENTERBY>
+                                </xsl:if>
+                                <xsl:if test="MEMO">
+                                    <MEMO>
+                                        <xsl:value-of select="MEMO"/>
+                                    </MEMO>
+                                </xsl:if>
+                                <xsl:if test="FROMLOT">
+                                    <FROMLOT>
+                                        <xsl:value-of select="FROMLOT"/>
+                                    </FROMLOT>
+                                </xsl:if>
+                                <xsl:if test="TOLOT">
+                                    <TOLOT>
+                                        <xsl:value-of select="TOLOT"/>
+                                    </TOLOT>
+                                </xsl:if>
+                                <xsl:if test="LOADEDCOST">
+                                    <LOADEDCOST>
+                                        <xsl:value-of select="LOADEDCOST"/>
+                                    </LOADEDCOST>
+                                </xsl:if>
+                                <xsl:if test="TAX1CODE">
+                                    <TAX1CODE>
+                                        <xsl:value-of select="TAX1CODE"/>
+                                    </TAX1CODE>
+                                </xsl:if>
+                                <xsl:if test="TAX1">
+                                    <TAX1>
+                                        <xsl:value-of select="TAX1"/>
+                                    </TAX1>
+                                </xsl:if>
+                                <xsl:if test="TAX2CODE">
+                                    <TAX2CODE>
+                                        <xsl:value-of select="TAX2CODE"/>
+                                    </TAX2CODE>
+                                </xsl:if>
+                                <xsl:if test="TAX2">
+                                    <TAX2>
+                                        <xsl:value-of select="TAX2"/>
+                                    </TAX2>
+                                </xsl:if>
+                                <xsl:if test="TAX3CODE">
+                                    <TAX3CODE>
+                                        <xsl:value-of select="TAX3CODE"/>
+                                    </TAX3CODE>
+                                </xsl:if>
+                                <xsl:if test="TAX3">
+                                    <TAX3>
+                                        <xsl:value-of select="TAX3"/>
+                                    </TAX3>
+                                </xsl:if>
+                                <xsl:if test="TAX4CODE">
+                                    <TAX4CODE>
+                                        <xsl:value-of select="TAX4CODE"/>
+                                    </TAX4CODE>
+                                </xsl:if>
+                                <xsl:if test="TAX4">
+                                    <TAX4>
+                                        <xsl:value-of select="TAX4"/>
+                                    </TAX4>
+                                </xsl:if>
+                                <xsl:if test="TAX5CODE">
+                                    <TAX5CODE>
+                                        <xsl:value-of select="TAX5CODE"/>
+                                    </TAX5CODE>
+                                </xsl:if>
+                                <xsl:if test="TAX5">
+                                    <TAX5>
+                                        <xsl:value-of select="TAX5"/>
+                                    </TAX5>
+                                </xsl:if>
+                                <xsl:if test="PRORATED">
+                                    <PRORATED>
+                                        <xsl:value-of select="PRORATED"/>
+                                    </PRORATED>
+                                </xsl:if>
+                                <xsl:if test="AGREEMENTPOTYPE">
+                                    <AGREEMENTPOTYPE>
+                                        <xsl:value-of select="AGREEMENTPOTYPE"/>
+                                    </AGREEMENTPOTYPE>
+                                </xsl:if>
+                                <xsl:if test="PRORATESERVICE">
+                                    <PRORATESERVICE>
+                                        <xsl:value-of select="PRORATESERVICE"/>
+                                    </PRORATESERVICE>
+                                </xsl:if>
+                                <xsl:if test="CURRENCYCODE2">
+                                    <CURRENCYCODE2>
+                                        <xsl:value-of select="CURRENCYCODE2"/>
+                                    </CURRENCYCODE2>
+                                </xsl:if>
+                                <xsl:if test="EXCHANGERATE2">
+                                    <EXCHANGERATE2>
+                                        <xsl:value-of select="EXCHANGERATE2"/>
+                                    </EXCHANGERATE2>
+                                </xsl:if>
+                                <xsl:if test="LINECOST2">
+                                    <LINECOST2>
+                                        <xsl:value-of select="LINECOST2"/>
+                                    </LINECOST2>
+                                </xsl:if>
+                                <xsl:if test="SOURCESYSID">
+                                    <SOURCESYSID>
+                                        <xsl:value-of select="SOURCESYSID"/>
+                                    </SOURCESYSID>
+                                </xsl:if>
+                                <xsl:if test="OWNERSYSID">
+                                    <OWNERSYSID>
+                                        <xsl:value-of select="OWNERSYSID"/>
+                                    </OWNERSYSID>
+                                </xsl:if>
+                                <xsl:if test="EXTERNALREFID">
+                                    <EXTERNALREFID>
+                                        <xsl:value-of select="EXTERNALREFID"/>
+                                    </EXTERNALREFID>
+                                </xsl:if>
+                                <xsl:if test="APISEQ">
+                                    <APISEQ>
+                                        <xsl:value-of select="APISEQ"/>
+                                    </APISEQ>
+                                </xsl:if>
+                                <xsl:if test="SENDERSYSID">
+                                    <SENDERSYSID>
+                                        <xsl:value-of select="SENDERSYSID"/>
+                                    </SENDERSYSID>
+                                </xsl:if>
+                                <xsl:if test="ISSUEID">
+                                    <ISSUEID>
+                                        <xsl:value-of select="ISSUEID"/>
+                                    </ISSUEID>
+                                </xsl:if>
+                                <xsl:if test="INVTRANSID">
+                                    <INVTRANSID>
+                                        <xsl:value-of select="INVTRANSID"/>
+                                    </INVTRANSID>
+                                </xsl:if>
+                                <xsl:if test="ROWSTAMP">
+                                    <ROWSTAMP>
+                                        <xsl:value-of select="ROWSTAMP"/>
+                                    </ROWSTAMP>
+                                </xsl:if>
+                                <xsl:if test="USERDATA1">
+                                    <USERDATA1>
+                                        <xsl:value-of select="USERDATA1"/>
+                                    </USERDATA1>
+                                </xsl:if>
+                                <xsl:if test="USERDATA2">
+                                    <USERDATA2>
+                                        <xsl:value-of select="USERDATA2"/>
+                                    </USERDATA2>
+                                </xsl:if>
+                                <xsl:if test="USERDATA3">
+                                    <USERDATA3>
+                                        <xsl:value-of select="USERDATA3"/>
+                                    </USERDATA3>
+                                </xsl:if>
+                                <xsl:if test="USERDATA4">
+                                    <USERDATA4>
+                                        <xsl:value-of select="USERDATA4"/>
+                                    </USERDATA4>
+                                </xsl:if>
+                                <xsl:if test="USERDATA5">
+                                    <USERDATA5>
+                                        <xsl:value-of select="USERDATA5"/>
+                                    </USERDATA5>
+                                </xsl:if>
+                                <xsl:if test="USERDATA6">
+                                    <USERDATA6>
+                                        <xsl:value-of select="USERDATA6"/>
+                                    </USERDATA6>
+                                </xsl:if>
+                                <xsl:if test="USERDATA7">
+                                    <USERDATA7>
+                                        <xsl:value-of select="USERDATA7"/>
+                                    </USERDATA7>
+                                </xsl:if>
+                                <xsl:if test="USERDATA8">
+                                    <USERDATA8>
+                                        <xsl:value-of select="USERDATA8"/>
+                                    </USERDATA8>
+                                </xsl:if>
+                                <xsl:if test="USERDATA9">
+                                    <USERDATA9>
+                                        <xsl:value-of select="USERDATA9"/>
+                                    </USERDATA9>
+                                </xsl:if>
+                                <xsl:if test="USERDATA10">
+                                    <USERDATA10>
+                                        <xsl:value-of select="USERDATA10"/>
+                                    </USERDATA10>
+                                </xsl:if>
+                                <xsl:if test="BATCHID">
+                                    <BATCHID>
+                                        <xsl:value-of select="BATCHID"/>
+                                    </BATCHID>
+                                </xsl:if>
+                                <xsl:if test="BATCHLINEID">
+                                    <BATCHLINEID>
+                                        <xsl:value-of select="BATCHLINEID"/>
+                                    </BATCHLINEID>
+                                </xsl:if>
+                                <xsl:if test="UTRANSTYPE">
+                                    <UTRANSTYPE>
+                                        <xsl:value-of select="UTRANSTYPE"/>
+                                    </UTRANSTYPE>
+                                </xsl:if>
+                                <xsl:if test="SOURCEID">
+                                    <SOURCEID>
+                                        <xsl:value-of select="SOURCEID"/>
+                                    </SOURCEID>
+                                </xsl:if>
+                                <xsl:if test="APISITE">
+                                    <APISITE>
+                                        <xsl:value-of select="APISITE"/>
+                                    </APISITE>
+                                </xsl:if>
+                                <xsl:if test="IMPORTSTATUS">
+                                    <IMPORTSTATUS>
+                                        <xsl:value-of select="IMPORTSTATUS"/>
+                                    </IMPORTSTATUS>
+                                </xsl:if>
+                                <xsl:if test="IMPORTTIMESTAMP">
+                                    <IMPORTTIMESTAMP>
+                                        <xsl:value-of select="IMPORTTIMESTAMP"/>
+                                    </IMPORTTIMESTAMP>
+                                </xsl:if>
+                                <xsl:if test="IMPORTMESSAGE">
+                                    <IMPORTMESSAGE>
+                                        <xsl:value-of select="IMPORTMESSAGE"/>
+                                    </IMPORTMESSAGE>
+                                </xsl:if>
+                            </root>
+                        </xsl:for-each>
+                    </root>
+                </Body>
+            </ns4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>147</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx:ActivityInput>
+                <message>
+                    <xsl:value-of select="'Process Start'"/>
+                </message>
+            </pfx:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log-1">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>586</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx:ActivityInput>
+                <message>
+                    <xsl:value-of select="'Completed'"/>
+                </message>
+            </pfx:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>502</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="root" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="GLDEBITACCT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="GLCREDITACCT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FINANCIALPERIOD" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TRANSDATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ENTERDATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TRANSTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="DESCRIPTION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ITEMNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="STORELOC" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BINNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="QUANTITY" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FROMSTORELOC" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="UNITCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LINECOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PONUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="POLINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVOICENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVOICELINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="COSTLINENUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WONUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="WPOPERATION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EQNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LOCATION" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CLAIMNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYCODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYUNITCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYLINECOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXCHANGERATE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE6" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE7" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="JE8" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LABORCODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CRAFT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="REGULARHRS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="OTHRS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TOOLNUM" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="VENDOR" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ENTERBY" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="MEMO" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="FROMLOT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TOLOT" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LOADEDCOST" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX1CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX2CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX3CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX4CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX5CODE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="TAX5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PRORATED" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="AGREEMENTPOTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="PRORATESERVICE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="CURRENCYCODE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXCHANGERATE2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="LINECOST2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SOURCESYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="OWNERSYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="EXTERNALREFID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="APISEQ" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SENDERSYSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ISSUEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="INVTRANSID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="ROWSTAMP" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA1" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA2" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA3" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA4" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA5" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA6" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA7" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA8" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA9" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="USERDATA10" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BATCHID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="BATCHLINEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="UTRANSTYPE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="SOURCEID" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="APISITE" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTSTATUS" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTTIMESTAMP" type="xsd:string" minOccurs="0"/>
+                                        <xsd:element name="IMPORTMESSAGE" type="xsd:string" minOccurs="0"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Parse-Data/Output/Rows/root">
+                    <root>
+                        <xsl:if test="GLDEBITACCT">
+                            <GLDEBITACCT>
+                                <xsl:value-of select="GLDEBITACCT"/>
+                            </GLDEBITACCT>
+                        </xsl:if>
+                        <xsl:if test="GLCREDITACCT">
+                            <GLCREDITACCT>
+                                <xsl:value-of select="GLCREDITACCT"/>
+                            </GLCREDITACCT>
+                        </xsl:if>
+                        <xsl:if test="DESCRIPTION">
+                            <DESCRIPTION>
+                                <xsl:value-of select="DESCRIPTION"/>
+                            </DESCRIPTION>
+                        </xsl:if>
+                        <xsl:if test="QUANTITY">
+                            <QUANTITY>
+                                <xsl:value-of select="QUANTITY"/>
+                            </QUANTITY>
+                        </xsl:if>
+                        <xsl:if test="LINECOST">
+                            <LINECOST>
+                                <xsl:value-of select="LINECOST"/>
+                            </LINECOST>
+                        </xsl:if>
+                        <xsl:if test="POLINENUM">
+                            <POLINENUM>
+                                <xsl:value-of select="POLINENUM"/>
+                            </POLINENUM>
+                        </xsl:if>
+                        <xsl:if test="WONUM">
+                            <WONUM>
+                                <xsl:value-of select="WONUM"/>
+                            </WONUM>
+                        </xsl:if>
+                    </root>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Data">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>399</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/Data Format.sharedparse</ParseSharedConfig>
+            <SkipBlankLines>true</SkipBlankLines>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <ContinueonError>true</ContinueonError>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/param"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="10000"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Remove File">
+        <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
+        <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
+        <pd:x>959</pd:x>
+        <pd:y>53</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns2:RemoveActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$Start/root/param"/>
+                </fileName>
+            </ns2:RemoveActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Sleep">
+        <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+        <pd:resourceType>ae.activities.sleep</pd:resourceType>
+        <pd:x>779</pd:x>
+        <pd:y>196</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns5:SleepInputSchema>
+                <IntervalInMillisec>
+                    <xsl:value-of select="60000"/>
+                </IntervalInMillisec>
+            </ns5:SleepInputSchema>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Start">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>235</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="param" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <param>
+                    <xsl:value-of select="'C:\Users\ranumandla\Documents\Data\TibcoPOCData\Bw5Works\data\1\MAXMIMOALL.csv'"/>
+                </param>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log-2">
+        <pd:type>com.tibco.pe.core.WriteToLogActivity</pd:type>
+        <pd:resourceType>ae.activities.log</pd:resourceType>
+        <pd:x>480</pd:x>
+        <pd:y>205</pd:y>
+        <config>
+            <role>User</role>
+        </config>
+        <pd:inputBindings>
+            <pfx:ActivityInput>
+                <message>
+                    <xsl:value-of select="'Process started again'"/>
+                </message>
+            </pfx:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Parse Data</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Log-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Timer</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JMS Queue Sender</pd:from>
+        <pd:to>EndLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>EndLog</pd:from>
+        <pd:to>Remove File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log-1</pd:from>
+        <pd:to>JMS Queue Sender</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Remove File</pd:from>
+        <pd:to>External Command</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>External Command</pd:from>
+        <pd:to>Sleep</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Sleep</pd:from>
+        <pd:to>External-Command-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>External-Command-1</pd:from>
+        <pd:to>Log-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log-2</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

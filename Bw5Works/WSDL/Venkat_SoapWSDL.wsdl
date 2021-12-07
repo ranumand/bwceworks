@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.example.com/1600373173164" xmlns:ns0="http://www.tibco.com/schemas/VenkatAssignment/SharedResources/Schemas/Schema.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://xmlns.example.com/1600373173164">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/schemas/VenkatAssignment/SharedResources/Schemas/Schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.tibco.com/schemas/VenkatAssignment/SharedResources/Schemas/Schema.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:element name="InputSchema">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Input" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="input1" type="xs:string" minOccurs="0"/>
+                                    <xs:element name="input2" type="xs:string" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="OutputSchema">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Output" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="OutputResponse" type="xs:string" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="Service">
+        <wsdl:port name="PortTypeEndpoint1" binding="tns:PortTypeEndpoint1Binding">
+            <soap:address location="http://localhost:7889/Service/Service.serviceagent/PortTypeEndpoint1"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="ServcieOperation">
+            <wsdl:input message="tns:InputRequest"/>
+            <wsdl:output message="tns:OutputResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint1Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ServcieOperation">
+            <soap:operation style="document" soapAction="/Service/Service.serviceagent/PortTypeEndpoint1/ServcieOperation"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="Input"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="Output"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="InputRequest">
+        <wsdl:part name="Input" element="ns0:InputSchema"/>
+    </wsdl:message>
+    <wsdl:message name="OutputResponse">
+        <wsdl:part name="Output" element="ns0:OutputSchema"/>
+    </wsdl:message>
+</wsdl:definitions>

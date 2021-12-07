@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>FileSave.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>59</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <param>
+                <xsl:value-of select="$Rename-File/ns:RenameActivityOutput/fileInfo/fileName"/>
+            </param>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="param" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>59</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1595525120027</pd:targetNamespace>
+    <pd:activity name="Rename File">
+        <pd:type>com.tibco.plugin.file.FileRenameActivity</pd:type>
+        <pd:resourceType>ae.activities.FileRenameActivity</pd:resourceType>
+        <pd:x>285</pd:x>
+        <pd:y>59</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns:RenameActivityConfig>
+                <fromFileName>
+                    <xsl:value-of select="'C:\Users\ranumandla\Documents\Data\MOUT_GL_INTERFACE-JDE_JM Comments.xlsx'"/>
+                </fromFileName>
+                <toFileName>
+                    <xsl:value-of select="'C:\Users\ranumandla\Documents\Data\MOUT_GL_INTERFACE-JDE_JM Comments2.xls'"/>
+                </toFileName>
+            </ns:RenameActivityConfig>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Rename File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Rename File</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

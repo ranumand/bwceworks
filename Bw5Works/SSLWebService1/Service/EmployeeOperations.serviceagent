@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceResource xmlns:wsdl="http://xmlns.example.com/1590182964417">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://xmlns.example.com/1590182964417" location="/SharedResources/WSDL/EmployeeOperations.wsdl"/>
+    <config>
+        <wsdl namespace="http://xmlns.example.com/1590242338603" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="false"/>
+        <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
+        <implType>bw</implType>
+        <groups>
+            <row isDefault="true" groupName="Default"/>
+        </groups>
+        <serviceChange>Tue Oct 13 23:06:45 GST 2020</serviceChange>
+        <name>EmployeeOperations</name>
+        <resourceType>service.definition</resourceType>
+        <interfaceImpl>
+            <tab>
+                <tabName>EmpOperations</tabName>
+                <tabType>bw</tabType>
+                <config>
+                    <wsdlDetail location="/SharedResources/WSDL/EmployeeOperations.wsdl" portType="EmpOperations" ns="http://xmlns.example.com/1590182964417"/>
+                    <detail>
+                        <tab>
+                            <tabName>service.definition.impl.tab.label</tabName>
+                            <tabType>impl</tabType>
+                            <config>
+                                <operations>
+                                    <row opName="OpGetEmployee" opImpl="/BusinessProcess/MainProcess/GetEmployeeMainProcess.process"/>
+                                    <row opName="OpOperation2" opImpl="/BusinessProcess/MainProcess/OpOperation2.process"/>
+                                </operations>
+                            </config>
+                        </tab>
+                        <tab>
+                            <tabName>service.definition.ep.tab.label</tabName>
+                            <tabType>ep</tabType>
+                            <config>
+                                <epBindings>
+                                    <row epName="EmpOperationsEndpoint1" epType="soap">
+                                        <config>
+                                            <epDetail>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.transport.tab.label</tabName>
+                                                    <tabType>transport</tabType>
+                                                    <config>
+                                                        <sharedChannel>/SharedResources/Connections/HTTP Connection.sharedhttp</sharedChannel>
+                                                        <transport>
+                                                            <config>
+                                                                <useBasicAuthentication>false</useBasicAuthentication>
+                                                                <httpURI>/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1</httpURI>
+                                                            </config>
+                                                        </transport>
+                                                    </config>
+                                                </tab>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.details.tab.label</tabName>
+                                                    <tabType>details</tabType>
+                                                    <config>
+                                                        <operationStyle>document</operationStyle>
+                                                        <soapVersion>SOAP 1.1</soapVersion>
+                                                        <soap>
+                                                            <operation name="OpGetEmployee">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Service/EmployeeOperations.serviceagent/EmpOperationsEndpoint1/OpGetEmployee2</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="OpOperation2">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/Service/EmployeeOperations.serviceagent//OpOperation2</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                        </soap>
+                                                    </config>
+                                                </tab>
+                                            </epDetail>
+                                        </config>
+                                    </row>
+                                </epBindings>
+                            </config>
+                        </tab>
+                    </detail>
+                </config>
+            </tab>
+        </interfaceImpl>
+    </config>
+</serviceResource>

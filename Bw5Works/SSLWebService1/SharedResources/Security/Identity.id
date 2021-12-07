@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <identity>
+        <objectType>url</objectType>
+        <name>Identity</name>
+        <designer>
+            <lockedProperties/>
+            <fixedChildren/>
+            <resourceDescriptions/>
+        </designer>
+        <certUrl>file:///C:/Users/ranumandla/Documents/Data/TibcoPOCData/Bw5Works/Certificates/Selfsign_server.cer</certUrl>
+        <privateKeyUrl>file:///C:/Users/ranumandla/Documents/Data/TibcoPOCData/Bw5Works/Certificates/Selfsign_server.cer</privateKeyUrl>
+        <passPhrase>#!blMD0V+6s98LRErTckEzays28ZWOS7bLp5gUiu0hs+o=</passPhrase>
+        <url>file://C:/Users/ranumandla/Documents/Data/TibcoPOCData/Bw5Works/Certificates/selfsign_server_keystore.jks</url>
+        <fileType>JKS</fileType>
+    </identity>
+</Repository:repository>

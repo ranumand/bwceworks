@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:com.td.tse.momtrans.wsftp/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:com.td.tse.momtrans.wsftp/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ftpRecords">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="siteRecords" type="FTPRecordListType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FTPRecordType">
+		<xs:sequence>
+			<xs:element name="siteName" type="xs:string"/>
+			<xs:element name="host" type="xs:string"/>
+			<xs:element name="password" type="xs:string" minOccurs="0"/>
+			<xs:element name="userID" type="xs:string"/>
+			<xs:element name="port" type="xs:string"/>
+			<xs:element name="protocolInfo" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FTPRecordListType">
+		<xs:sequence>
+			<xs:element name="siteRecord" maxOccurs="unbounded" type="FTPRecordType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="siteRecord" type="FTPRecordType"/>
+</xs:schema>

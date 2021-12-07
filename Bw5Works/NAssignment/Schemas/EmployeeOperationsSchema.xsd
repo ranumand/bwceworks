@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibcoworks.com/EmployeeOperations"
+	 targetNamespace="http://www.tibcoworks.com/EmployeeOperations"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="EmployeeRegistrationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="EmployeeRegistrationReq" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CustomerName" type="xs:string" minOccurs="0"/>
+							<xs:element name="PhoneNumber" type="xs:string" minOccurs="0"/>
+							<xs:element name="Email" type="xs:string" minOccurs="0"/>
+							<xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+							<xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+							<xs:element name="City" type="xs:string" minOccurs="0"/>
+							<xs:element name="ZipCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="DateOfBirth" type="xs:string" minOccurs="0"/>
+							<xs:element name="RegistrationDateTime" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EmployeeRegistrationResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Status" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Msg" type="xs:string" minOccurs="0"/>
+							<xs:element name="Code" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CustomerDetails" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CustomerName" type="xs:string" minOccurs="0"/>
+							<xs:element name="PhoneNumber" type="xs:string" minOccurs="0"/>
+							<xs:element name="Email" type="xs:string" minOccurs="0"/>
+							<xs:element name="AddressLine1" type="xs:string" minOccurs="0"/>
+							<xs:element name="AddressLine2" type="xs:string" minOccurs="0"/>
+							<xs:element name="City" type="xs:string" minOccurs="0"/>
+							<xs:element name="ZipCode" type="xs:string" minOccurs="0"/>
+							<xs:element name="DateOfBirth" type="xs:string" minOccurs="0"/>
+							<xs:element name="RegistrationDateTime" type="xs:string" minOccurs="0"/>
+							<xs:element name="CustomerID" type="xs:string" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

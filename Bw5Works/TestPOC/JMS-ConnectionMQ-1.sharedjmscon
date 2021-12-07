@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>JMS-ConnectionMQ-1</name>
+    <resourceType>ae.shared.JMSConnectionKey</resourceType>
+    <config>
+        <NamingEnvironment>
+            <UseJNDI>true</UseJNDI>
+            <ProviderURL>tcp://127.0.0.1:61616</ProviderURL>
+            <NamingURL>tcp://127.0.0.1:61616</NamingURL>
+            <NamingInitialContextFactory>%%ContextFactoryMQ%%</NamingInitialContextFactory>
+            <TopicFactoryName>TopicConnectionFactory</TopicFactoryName>
+            <QueueFactoryName>QueueConnectionFactory</QueueFactoryName>
+            <NamingPrincipal>admin1</NamingPrincipal>
+            <NamingCredential>#!cJanaGiO30Ozm3Pxz3cwZ+EqXysMAD7Y</NamingCredential>
+        </NamingEnvironment>
+        <ConnectionAttributes>
+            <username/>
+            <password/>
+            <clientID/>
+            <autoGenClientID>true</autoGenClientID>
+        </ConnectionAttributes>
+        <UseXACF>false</UseXACF>
+        <UseSharedJndiConfig>false</UseSharedJndiConfig>
+    </config>
+</BWSharedResource>
